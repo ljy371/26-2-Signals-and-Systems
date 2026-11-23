@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123e75">
+<title>Signals &amp; Systems | AI Signal Detective · PNU CHO Lab</title>
+<style>
+:root{color-scheme:light;--navy:#102d4b;--deep:#133f75;--blue:#276fba;--teal:#0b907b;--orange:#dd8737;--purple:#7965c6;--ink:#17334e;--muted:#61778c;--line:#dce6f1;--bg:#f3f7fc;--pale:#edf4fc;--white:#fff;--shadow:0 10px 28px rgba(20,54,95,.055)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.58 Inter,Pretendard,'Noto Sans KR','Malgun Gothic',system-ui,-apple-system,sans-serif}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.5}.wrap{max-width:1350px;margin:0 auto;padding:0 27px}.hero{background:linear-gradient(111deg,#103a6d 0%,#14528d 72%,#1b7aab 100%);color:white}.hero .wrap{padding-top:25px;padding-bottom:32px}.brandline{display:flex;justify-content:space-between;align-items:center;gap:14px}.brandline strong{letter-spacing:.13em;font-size:16px}.brandline small{text-align:right;color:#d4e4f6;letter-spacing:.07em;font-weight:650;line-height:1.5}.copyright{margin-top:7px;color:#d5e6fa;font-size:11.5px}.hero-grid{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-top:26px}.overline{font-size:11px;font-weight:850;color:#9cd6fd;text-transform:uppercase;letter-spacing:.16em}.hero h1{font-size:clamp(28px,3.5vw,42px);letter-spacing:-.04em;line-height:1.16;margin:7px 0 10px}.hero p{color:#dceafe;font-size:16px;max-width:700px;margin:0}.hero-icon{flex:0 0 200px;opacity:.98}.section-heading{font-size:20px;letter-spacing:-.02em;margin:29px 0 13px;font-weight:830;display:flex;align-items:baseline;gap:12px}.section-heading span{font-size:14px;font-weight:550;color:#74869b}.goals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.goal,.panel{border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow)}.goal{padding:16px;display:flex;gap:12px;align-items:flex-start}.goal .num{background:#e9f2fd;border-radius:10px;min-width:34px;height:34px;display:grid;place-items:center;color:#195a98;font-weight:850}.goal b{font-size:14px}.goal p{font-size:14px;margin:4px 0 0;color:var(--muted)}.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;align-items:center;gap:10px;margin:19px 0 0}.flowitem{padding:12px 10px;border-radius:12px;border:1px solid #dbe5f1;background:#fff;text-align:center;min-width:0}.flowitem b{display:block;font-size:12px}.flowitem span{color:#6f8092;font-size:13px}.flowarr{color:#77a0c9;font-size:19px}.tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;background:#e9f1f9;border-radius:14px;padding:7px;margin-bottom:15px}.tab{padding:12px 10px;border:1px solid transparent;border-radius:10px;background:transparent;text-align:left;color:#57718c;display:flex;align-items:center;gap:9px;font-weight:760;font-size:12.5px}.tab .tabnum{font-size:10px;font-weight:850;color:#7a94af}.tab.active{background:#fff;color:#195b9a;border-color:#cbdff3;box-shadow:0 2px 10px rgba(34,86,146,.07)}.tab.active .tabnum{color:#1874bd}.simulation{display:grid;grid-template-columns:315px minmax(0,1fr);gap:16px;align-items:start}.panel{padding:20px;min-width:0}.panel h3{font-size:17px;line-height:1.3;margin:0 0 5px}.small{font-size:14px;color:var(--muted)}.panel-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:11px}.tag{background:#eef6ff;color:#2569a6;font-weight:800;font-size:10px;border-radius:99px;padding:5px 9px;letter-spacing:.02em}.control-body{min-height:320px}.control-set{display:none}.control-set.active{display:block}.field-label{display:flex;justify-content:space-between;gap:10px;align-items:center;font-size:12.5px;font-weight:780;margin-top:20px;margin-bottom:8px}.field-label output{color:#1d6db4;font-weight:840;font-variant-numeric:tabular-nums}.range{accent-color:var(--blue);display:block;width:100%;cursor:pointer}.limits{display:flex;justify-content:space-between;color:#90a2b3;font-size:10.5px}.select{width:100%;border:1px solid #d3e0ed;border-radius:9px;color:#265270;padding:10px 11px;background:white;font-size:13px;outline-color:#428bd0}.btnrow{display:flex;gap:7px;margin-top:15px;flex-wrap:wrap}.btn{border:1px solid #ccdae9;border-radius:10px;background:#fff;padding:10px 12px;font-weight:760;font-size:12px;color:#2b587e;transition:.13s}.btn:hover{background:#edf5fe;border-color:#9ac1e7}.btn:focus-visible,.tab:focus-visible,.seg:focus-visible{outline:3px solid #80b9ed;outline-offset:2px}.btn.primary{background:var(--blue);border-color:var(--blue);color:white}.btn.primary:hover{background:#165d9d}.btn.green{background:var(--teal);border-color:var(--teal);color:white}.btn.green:hover{background:#087c6b}.btn.flex{flex:1}.btn:active{transform:scale(.98)}.segrow{display:flex;flex-wrap:wrap;gap:6px}.seg{border:1px solid #d2e0ed;background:#f8fafc;color:#4b6781;font-size:11.5px;padding:8px 10px;border-radius:9px;font-weight:700}.seg.active{background:#e8f3ff;border-color:#72aee4;color:#165f9a}.hint{background:#f0f6fc;border-radius:12px;color:#49647e;font-size:14px;padding:12px 13px;margin-top:16px}.hint strong{color:#1b5d98}.control-divider{border-top:1px solid #e4edf6;margin-top:17px;padding-top:2px}.statrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:13px}.stat{border:1px solid #e1eaf3;background:#fafcfe;border-radius:10px;padding:10px 12px;min-width:0}.stat small{font-size:10.5px;color:#72869a;display:block}.stat b{font-size:17px;color:#205c92;font-variant-numeric:tabular-nums}.progress{height:7px;border-radius:99px;background:#e4edf5;overflow:hidden;margin-top:10px}.progress>span{height:100%;display:block;background:linear-gradient(90deg,#2a75c1,#10a28b);width:0;transition:width .15s}.plots{display:grid;gap:10px}.graph{border:1px solid #e0e9f3;border-radius:13px;overflow:hidden;background:linear-gradient(180deg,#fff,#fbfdff)}.graphhead{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:11px 14px 0}.graphhead b{font-size:14.5px}.graphhead span{font-size:13px;color:#74879a;text-align:right}.graph canvas{display:block;width:100%;height:206px;touch-action:pan-y}.graph.tall canvas{height:218px}.live-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:14px 0 0}.metric{border:1px solid #e1eaf2;border-radius:10px;background:#f8fbfe;padding:10px 12px;min-width:0}.metric small{display:block;font-size:10.5px;color:#71859a}.metric strong{display:block;margin-top:3px;font-size:15px;color:#184f82;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}.metric strong.good{color:#07846e}.metric strong.warn{color:#c76b31}.transport{display:grid;grid-template-columns:1fr auto;align-items:center;gap:16px;margin-top:17px;border-top:1px solid #e1eaf3;padding-top:16px}.scrub label{font-size:12px;font-weight:760;display:flex;justify-content:space-between;gap:10px;margin-bottom:5px}.scrub label output{color:#266cb0;font-variant-numeric:tabular-nums}.transport .btnrow{margin:0;flex-wrap:nowrap}.explain{background:#f1f7fd;border-radius:12px;border:1px solid #e1ebf5;padding:15px;margin-top:15px;display:grid;gap:5px}.explain strong{font-size:13px;color:#1b598d}.explain .formula{font:17px/1.55 Cambria,'Times New Roman',serif;color:#175991;overflow-wrap:anywhere}.explain p{font-size:14px;margin:0;color:#49647e}.challenge-area{margin:18px 0 35px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.challenge{background:white;border:1px solid var(--line);border-radius:15px;padding:18px;box-shadow:var(--shadow)}.challenge h3{font-size:15px;margin:0 0 7px}.challenge p{font-size:14px;color:var(--muted);margin:7px 0}.challenge details{margin-top:10px;border-top:1px solid #e4edf5;padding-top:9px;font-size:13.5px}.challenge summary{cursor:pointer;color:#246eae;font-weight:750}.challenge details p{margin-bottom:0}.legend{display:flex;gap:12px;align-items:center;flex-wrap:wrap;font-size:12.5px;color:#6c8195}.legend span{display:inline-flex;align-items:center;gap:5px}.legend i{width:9px;height:9px;border-radius:99px;display:inline-block}.footer{border-top:1px solid #d7e2ec;margin:0 auto;padding:17px 0 27px;color:#8292a4;font-size:11px;display:flex;justify-content:space-between;gap:8px}.disclaimer{color:#7d8b9b;font-size:12.5px;margin:8px 0}.u-hidden{display:none!important}.mono{font-variant-numeric:tabular-nums}.math{font-family:Cambria,'Times New Roman',serif}.subtle{color:#8ea2b4}.safety{font-weight:790;color:#b97138}.cap{font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:850;color:#728ca7}
+@media(max-width:1050px){.simulation{grid-template-columns:275px minmax(0,1fr)}.wrap{padding:0 18px}.panel{padding:15px}.tab{flex-direction:column;align-items:flex-start;gap:2px}}
+@media(max-width:750px){.hero-icon{display:none}.goals{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr;gap:7px}.flowarr{display:none}.simulation{grid-template-columns:1fr}.tabs{grid-template-columns:1fr 1fr}.tab{flex-direction:row}.challenge-area{grid-template-columns:1fr}.transport{grid-template-columns:1fr}.graph canvas{height:206px}.brandline small{display:none}}
+@media(max-width:430px){.wrap{padding:0 12px}.flow{grid-template-columns:1fr 1fr}.live-strip{grid-template-columns:1fr}.tab{font-size:11px;padding:10px 6px}.tabs{gap:4px}.hero h1{font-size:29px}}
+@media print{body{background:white}.hero{background:white;color:#153e70;border-bottom:3px solid #1d639d}.hero p,.copyright{color:#395978}.panel,.goal,.challenge{box-shadow:none}.btnrow,.tabs,.transport{display:none}.simulation{grid-template-columns:280px 1fr}}
+
+/* Part 03 — time-respecting causality demonstration */
+[hidden]{display:none!important}
+.causal-demo{border:1px solid #d8e6f4;border-radius:13px;padding:14px;margin-top:11px;background:linear-gradient(135deg,#f4f9ff,#fff)}
+.causal-demo-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.causal-demo-top b{font-size:15px;color:#153d64}
+.causal-actions{display:flex;gap:7px;flex-wrap:wrap}
+.causal-actions .btn{padding:7px 10px;font-size:12.5px}
+.causal-timeline{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0 8px;font-size:13px;color:#3e5f7d;align-items:center}
+.causal-chip{display:inline-flex;gap:6px;align-items:center;border:1px solid #dfebf6;background:white;border-radius:99px;padding:5px 10px;font-weight:700}
+.causal-chip::before{content:'';width:9px;height:9px;background:var(--blue);border-radius:2px;display:block}
+.causal-chip.future::before{background:var(--orange)}
+.causal-chip.ghost::before{background:#acbbc9}
+.causal-status{border-left:4px solid #e89a43;background:#fff8ed;padding:10px 12px;border-radius:8px;font-size:14px;line-height:1.6;color:#7d582b}
+.causal-status.ready{border-left-color:#119b79;background:#eefbf6;color:#185f52}
+.causal-status strong{font-weight:850}
+.causal-kernels{margin-top:14px;padding-top:13px;border-top:1px solid #dbe8f5}
+.causal-kernels>h4{font-size:14px;color:#234d76;margin:0 0 5px}
+.causal-kernels>p{font-size:13.5px;color:#59718a;margin:0 0 11px}
+.causal-kernels-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kernel-panel{min-width:0;background:white;border:1px solid #e3ebf5;border-radius:11px;padding:11px}
+.kernel-panel>strong{font-size:13px;color:#244b70}
+.kernel-panel svg{display:block;width:100%;height:auto;margin:4px 0 0}
+.kernel-panel p{margin:2px 0 0;color:#607c95;font-size:12.5px}
+.causal-rule{font-size:14px;font-weight:750;background:#ecf5ff;border-radius:8px;margin-top:9px;padding:9px 11px;color:#204f7b}
+@media(max-width:540px){.causal-kernels-grid{grid-template-columns:1fr}.causal-demo{padding:11px}.causal-actions{width:100%}.causal-actions .btn{flex:1}}
+
+
+/* Part 02 — AI learning explainer */
+.ai-demo{border:1px solid #d8e6f4;border-radius:13px;padding:14px;margin-top:11px;background:linear-gradient(135deg,#f5f9ff,#fff)}
+.ai-demo-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.ai-demo-top b{font-size:15px;color:#153d64}
+.ai-chips{display:flex;gap:8px;flex-wrap:wrap}
+.ai-chip{display:inline-flex;align-items:center;border:1px solid #dde8f4;background:white;border-radius:999px;padding:5px 10px;font-size:12.5px;font-weight:750;color:#355876}
+.ai-card-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.ai-card{background:white;border:1px solid #e2ebf5;border-radius:11px;padding:11px;min-width:0}
+.ai-card strong{display:block;font-size:13px;color:#244b70;margin-bottom:5px}
+.ai-card p{margin:0;color:#5b738c;font-size:13px;line-height:1.6}
+.ai-card .formula-mini{font:16px/1.5 Cambria,'Times New Roman',serif;color:#175991;display:block;margin-top:4px}
+.ai-mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.ai-mini{border:1px solid #e3ebf5;border-radius:12px;background:white;overflow:hidden}
+.ai-mini-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:10px 12px 0}
+.ai-mini-head b{font-size:13.5px;color:#22496e}
+.ai-mini-head span{font-size:12.5px;color:#6c8297;text-align:right}
+.ai-mini canvas{display:block;width:100%;height:188px}
+.ai-summary{margin-top:12px;padding:10px 12px;border-radius:10px;background:#eef7ff;border-left:4px solid #3d88cc;color:#24557f;font-size:14px;line-height:1.65}
+.ai-summary strong{color:#18486f}
+@media(max-width:760px){.ai-card-grid,.ai-mini-grid{grid-template-columns:1fr}.ai-demo{padding:11px}}
+
+
+/* Part 02: physical motivation + supervised training dataset explorer */
+.ai-usecase{border:1px solid #c9dff3;background:linear-gradient(115deg,#eef6ff,#fbfdff);border-radius:13px;padding:15px 17px;margin:10px 0 13px}
+.ai-usecase-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:7px}
+.ai-usecase-head strong{font-size:16px;color:#184a76}
+.ai-usecase-head span{color:#467ba6;font-size:13px;font-weight:750}
+.ai-usecase p{font-size:14.5px;line-height:1.8;color:#355c7b;margin:6px 0}
+.ai-usecase-summary{border-left:4px solid #168c82;background:#fff;border-radius:8px;padding:9px 12px;margin-top:10px;font-size:14px;line-height:1.65;color:#22576b;font-weight:700}
+.dataset{border:1px solid #d2e3f3;border-radius:13px;padding:15px;margin-top:13px;background:linear-gradient(180deg,#f7fbff,#fff)}
+.dataset h4{margin:0;color:#19496e;font-size:17px}
+.dataset-lead{font-size:14px;line-height:1.75;color:#536c84;margin:5px 0 10px}
+.dataset-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:11px 0 12px}
+.dataset-metric{background:#fff;border:1px solid #e0eaf3;border-radius:10px;padding:9px 11px;text-align:center}
+.dataset-metric b{font-size:18px;color:#1f6194;display:block;line-height:1.25;font-variant-numeric:tabular-nums}
+.dataset-metric span{font-size:12px;color:#657c91}
+.dataset-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin-bottom:14px}
+.dataset-step{border:1px solid #dce8f3;background:#fff;padding:9px 7px;border-radius:10px;min-width:0}
+.dataset-step small{font-weight:850;color:#2e81c2;display:block;font-size:10px;letter-spacing:.08em}
+.dataset-step b{display:block;color:#224f75;font-size:12.5px;margin:2px 0}
+.dataset-step span{display:block;color:#688099;font-size:12px;line-height:1.4}
+.dataset-select{border-top:1px solid #dbe7f3;padding-top:12px}
+.dataset-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:11px}
+.dataset-head strong{font-size:15px;color:#1d527d}
+.dataset-actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.dataset-actions .btn{padding:7px 10px;font-size:12px}
+.dataset-pickers{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:11px}
+.dataset-pickers label{color:#49677f;font-size:13px;font-weight:750}
+.dataset-pickers .range{flex:1;min-width:100px;max-width:280px}
+.dataset-pickers output{font-weight:800;color:#205f99;font-size:14px;font-variant-numeric:tabular-nums;min-width:83px}
+.dataset-pickers .btn{padding:6px 10px}
+.dataset-plotgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:11px;align-items:stretch}
+.dataset-plotbox{border:1px solid #e1e9f2;border-radius:12px;background:#fff;padding:10px;min-width:0}
+.dataset-title{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:6px}
+.dataset-title b{font-size:14px;color:#214f76}
+.dataset-title span{font-size:12px;color:#617d96}
+.dataset-plotbox canvas{display:block;width:100%;height:214px}
+.dataset-score{display:grid;gap:11px;margin:13px 0 7px}
+.dataset-score-title{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:#44617c;font-weight:750}
+.dataset-score-title b{color:#204d73;font-variant-numeric:tabular-nums}
+.dataset-track{height:18px;background:#eaf0f6;border-radius:6px;overflow:hidden;position:relative}
+.dataset-track:after{content:'';height:100%;width:1px;position:absolute;left:50%;top:0;background:#9fb2c5;z-index:2}
+.dataset-track>span{display:block;height:100%;border-radius:6px;transition:width .15s}
+.dataset-track.truth>span{background:#2f78b6}
+.dataset-track.pred>span{background:#11977c}
+.dataset-result{font-size:13px;padding:9px 10px;border-radius:8px;background:#eaf7f1;color:#17674d;line-height:1.55;font-weight:700}
+.dataset-result.missed{background:#fff3e7;color:#8f5e20}
+.dataset-loss{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;margin:9px 0 2px;padding:8px 10px;background:#f3f7fc;border-radius:9px}
+.dataset-loss span{font-size:12.5px;color:#4a6b85}
+.dataset-loss b{font-size:18px;color:#1b527c;font-variant-numeric:tabular-nums}
+.dataset-formula{margin-top:10px;padding:10px 12px;border:1px solid #e2eaf3;background:#fff;border-radius:10px;font-size:14px;color:#315d7e;line-height:1.65}
+.dataset-foot{font-size:13px;line-height:1.65;margin-top:10px;color:#607c92}
+@media(max-width:1000px){.dataset-plotgrid{grid-template-columns:1fr}.dataset-flow{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:620px){.dataset-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.dataset-metric{padding:8px 5px}.dataset-metric b{font-size:15px}.dataset-metric span{font-size:11px}.dataset-flow{grid-template-columns:repeat(2,minmax(0,1fr))}.dataset{padding:11px}.ai-usecase{padding:12px}.dataset-actions{width:100%}.dataset-actions .btn{flex:1}}
+
+
+/* v6 Lecture sequencing and model target */
+.model-spec{margin:12px 0 10px;background:#f1f7ff;border:1px solid #d9e7f6;border-radius:12px;padding:14px}
+.model-spec-heading{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.model-spec-heading strong{font-size:17px;color:#174b7d}
+.learning-step{font-size:11px;font-weight:850;letter-spacing:.09em;color:#3179b7;display:block}
+.model-equations{display:grid;grid-template-columns:1fr 1fr 1.1fr;gap:9px}
+.model-equations>div{min-width:0;background:white;border:1px solid #dfeaf5;border-radius:10px;padding:12px 10px}
+.model-equations span{display:block;color:#647d95;font-size:12.5px;font-weight:750;margin-bottom:6px}
+.model-equations strong{display:block;color:#174e7c;font:600 16px/1.6 Cambria,'Times New Roman',serif;overflow-wrap:anywhere}
+.model-equations small{display:block;font-family:Inter,'Malgun Gothic',sans-serif;font-size:12.5px;color:#496b88;margin-top:4px}
+.model-spec p{margin:12px 0 9px;font-size:14.5px;line-height:1.75;color:#355b7b}
+.model-rule{border-radius:8px;background:#e4f0fd;padding:9px 12px;color:#355d80;font-size:13.5px}
+.epoch-explainer{display:flex;gap:10px;align-items:flex-start;background:#fff8ec;border:1px solid #f1dbb7;border-radius:10px;margin:10px 0;padding:12px;font-size:14px;line-height:1.7;color:#76582b}
+.epoch-explainer strong{min-width:153px;color:#805c1a;font-size:14.5px}
+.epoch-explainer span{flex:1}
+.epoch-sidebar{background:#fff8ed;border-radius:8px;font-size:12.5px;line-height:1.65;color:#805b27;padding:9px 11px;margin:10px 0}
+.inflow-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:#f3f8fe;border-radius:9px;padding:11px 12px;margin-top:12px}
+.inflow-actions>span{flex:1;min-width:220px;color:#486b88;font-size:13.5px}
+.inflow-buttons{display:flex;flex-wrap:wrap;gap:7px}
+.inflow-buttons .btn{font-size:12.5px}
+.result-heading{border:1px solid #d8e8f6;border-radius:12px;background:#edf7ff;padding:15px 16px;margin:15px 0 11px}
+.result-heading h4{font-size:17px;margin:5px 0;color:#184e79}
+.result-heading p{font-size:14.5px;color:#395f80;line-height:1.75;margin:0}
+.lesson-bridge{border:1px solid #d1e3f5;background:linear-gradient(130deg,#f1f7fe,#fff);padding:18px;border-radius:14px;margin-top:15px}
+.lesson-bridge h4{font-size:17px;line-height:1.4;color:#194d7c;margin:5px 0 12px}
+.lesson-bridge p{font-size:14.5px;line-height:1.75;color:#3e627f;margin:7px 0}
+.bridge-question{border-left:4px solid #167da7;background:#e6f5ff;border-radius:8px;padding:12px 13px;font-size:14.5px;color:#235775;line-height:1.7;margin-top:12px}
+.lesson-bridge>.bridge-go{margin-top:13px}
+.bridge-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-top:13px}
+.bridge-card{padding:14px;border:1px solid #dfebf5;border-radius:12px;background:white;display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
+.bridge-card span{font-size:11px;font-weight:850;color:#1d78bb;letter-spacing:.045em}
+.bridge-card strong{font-size:15.5px;color:#1c527e}
+.bridge-card p{margin:0 0 8px;font-size:13.5px;line-height:1.7;flex:1}
+@media(max-width:950px){.model-equations{grid-template-columns:1fr 1fr}.model-equations>div:last-child{grid-column:span 2}}
+@media(max-width:620px){.model-equations,.bridge-two{grid-template-columns:1fr}.model-equations>div:last-child{grid-column:auto}.epoch-explainer{flex-direction:column;gap:4px}.epoch-explainer strong{min-width:0}.lesson-bridge{padding:13px}.model-spec{padding:12px}}
+
+
+/* v7 — clearer causal gesture example and BIBO convolution demonstration */
+.learn-panel{margin-top:13px;border:1px solid #d7e5f4;border-radius:13px;background:linear-gradient(125deg,#f3f9ff,#fff);padding:15px}
+.learn-panel h4{margin:0 0 6px;font-size:17px;color:#174b77}
+.learn-panel p{margin:6px 0;color:#476682;font-size:14px;line-height:1.78}
+.learn-note{display:block;font-size:13.5px;color:#52718d;line-height:1.75;margin-top:8px}
+.lab-btnrow{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin:9px 0}
+.lab-btnrow .btn{padding:8px 12px;font-size:13px}
+.lab-steps{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+.lab-chip{border:1px solid #d8e6f5;border-radius:999px;background:#fff;padding:6px 10px;color:#315e82;font-size:13px;font-weight:750}
+.gesture-plots{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:9px}
+.mini-plot{border:1px solid #e0eaf4;border-radius:11px;background:#fff;padding:10px;min-width:0}
+.mini-plot strong{font-size:13.5px;color:#234f76;display:block}
+.mini-plot canvas{height:182px;width:100%;display:block}
+.lab-status{padding:11px 12px;border-radius:10px;background:#fff7eb;border-left:4px solid #dd913e;font-size:14px;color:#7b572d;line-height:1.75;margin-top:11px}
+.lab-status.ready{border-left-color:#0d997b;background:#edfaf6;color:#235f52}
+.lab-comparison{border:1px solid #e0eaf4;border-radius:11px;background:#fff;padding:12px;margin-top:12px}
+.lab-comparison canvas{display:block;width:100%;height:215px}
+.lab-formula{font:600 17px/1.8 Cambria,'Times New Roman',serif;color:#1b5b91;margin-top:8px;overflow-wrap:anywhere}
+.lab-compare-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:10px}
+.lab-compare-grid .boxish{background:#fff;border:1px solid #e2eaf4;border-radius:10px;padding:12px;color:#476782;font-size:13.5px;line-height:1.7}
+.lab-compare-grid b{display:block;font-size:14px;color:#22577d}
+.learning-explain{background:#eaf3fd;padding:10px 12px;border-radius:8px;color:#24597d;font-size:14px;line-height:1.8;margin:11px 0 0}
+@media(max-width:820px){.gesture-plots,.lab-compare-grid{grid-template-columns:1fr}.learn-panel{padding:11px}}
+@media(max-width:900px){#bibo-demo .gesture-plots{grid-template-columns:1fr!important}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="brandline"><strong>PNU <span style="font-weight:400;opacity:.72">/</span> CHO LAB</strong><small>SCHOOL OF ELECTRICAL AND ELECTRONICS<br>Signals &amp; Systems</small></div>
+  <div class="copyright">© 2026 Kwanghyun Cho · CHO Lab, Pusan National University. All rights reserved.</div>
+  <div class="hero-grid"><div><div class="overline">Chapter 03 · Impulse Response / Convolution / Causality / Stability</div>
+    <h1>AI Signal Detective</h1><p>스마트폰 가속도 신호의 두 번 두드리기(Double Tap)를 감지하는 작은 학습형 필터를 만들며, 이산시간 시스템의 물리적 의미를 탐구합니다.</p></div>
+    <svg class="hero-icon" viewBox="0 0 215 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="스마트폰 충격을 나타낸 그림"><rect x="12" y="5" width="66" height="117" rx="12" fill="#b4daf6" opacity=".18" stroke="#d8ecff" stroke-width="2"/><rect x="20" y="21" width="50" height="81" rx="5" fill="#c1def3" opacity=".3"/><path d="M26 63H37l7-22 9 43 9-23h8" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><circle cx="45" cy="112" r="3.4" fill="#bcd6eb"/><path d="M94 63h18m-6-6 6 6-6 6" stroke="#c7e5fb" fill="none" stroke-width="2"/><path d="M123 63h12l7-30 9 59 9-28 9-22 10 48 8-26h12" stroke="#b4f1df" stroke-width="3.8" fill="none" stroke-linejoin="round"/><circle cx="143" cy="33" r="4" fill="#fff"/><circle cx="180" cy="42" r="4" fill="#fff"/></svg>
+  </div>
+</div></header>
+<main class="wrap">
+<h2 class="section-heading">Learning Goals <span>오늘 배운 개념을 하나의 AI 센서 응용에 연결하기</span></h2>
+<div class="goals">
+  <article class="goal"><div class="num">01</div><div><b>Impulse Response → System Behavior</b><p>충격에 대한 응답 h[n]만으로 LTI 필터가 신호에 미치는 영향을 파악한다.</p></div></article>
+  <article class="goal"><div class="num">02</div><div><b>Convolution → Learned Pattern Filter</b><p>AI가 FIR 가중치를 학습하고, Convolution으로 충격 패턴을 검출하는 과정을 관찰한다.</p></div></article>
+  <article class="goal"><div class="num">03</div><div><b>Causality &amp; Stability → Real-Time AI</b><p>미래 데이터 사용의 제약과 피드백 시스템의 안정 조건을 실험으로 확인한다.</p></div></article>
+</div>
+<div class="flow" aria-label="센서 신호 처리 흐름"><div class="flowitem"><b>Sensor x[n]</b><span>가속도 / 충격 / 노이즈</span></div><div class="flowarr">→</div><div class="flowitem"><b>Filter h[n], w[k]</b><span>응답 특성 / 학습된 계수</span></div><div class="flowarr">→</div><div class="flowitem"><b>Convolution z[n]</b><span>시간에 따른 패턴 점수</span></div><div class="flowarr">→</div><div class="flowitem"><b>AI Decision</b><span>Double Tap / Other</span></div></div>
+<h2 class="section-heading" id="live">Live Simulation <span>탭을 선택해 각 시스템의 동작을 관찰하세요</span></h2>
+<nav class="tabs" aria-label="실습 영역">
+<button class="tab active" type="button" data-tab="impulse" aria-pressed="true"><span class="tabnum">PART 01</span><span>Impulse Response</span></button>
+<button class="tab" type="button" data-tab="ai" aria-pressed="false"><span class="tabnum">PART 02</span><span>Train AI Filter</span></button>
+<button class="tab" type="button" data-tab="causal" aria-pressed="false"><span class="tabnum">PART 03</span><span>Causality</span></button>
+<button class="tab" type="button" data-tab="stable" aria-pressed="false"><span class="tabnum">PART 04</span><span>BIBO Stability</span></button>
+</nav>
+<div class="simulation">
+  <aside class="panel"><div class="panel-head"><div><h3>Simulation Controls</h3><div class="small" id="sidebar-sub">필터 종류를 선택해 보세요.</div></div></div>
+    <section class="control-set active" id="control-impulse">
+      <div class="field-label"><span>Filter Type</span></div><select class="select" id="filter-type"><option value="ma">Moving Average (FIR)</option><option value="exp">Exponential Smoother (IIR)</option><option value="learned">Learned FIR Filter (AI)</option></select>
+      <div class="field-label" id="ma-control-label"><span>Moving average length</span><output id="ma-out">4</output></div><input class="range" id="ma-length" type="range" min="2" max="10" step="1" value="4"><div class="limits" id="ma-limits"><span>2 samples</span><span>10 samples</span></div>
+      <div id="alpha-control" class="u-hidden"><div class="field-label"><span>Memory factor a</span><output id="alpha-out">0.70</output></div><input class="range" id="alpha" type="range" min="0.05" max="0.95" step="0.05" value="0.70"><div class="limits"><span>Short memory</span><span>Long memory</span></div></div>
+      <div class="hint" id="impulse-hint"><strong>Impulse test</strong><br>δ[n]을 넣으면 출력은 바로 h[n]입니다. 길이 4 이동평균의 충격 응답은 4개의 1/4입니다.</div>
+      <div class="statrow"><div class="stat"><small>Filter type</small><b id="filter-stat">FIR</b></div><div class="stat"><small>Support / decay</small><b id="memory-stat">4 samples</b></div></div>
+    </section>
+    <section class="control-set" id="control-ai">
+      <div class="field-label"><span>Sensor scenario</span></div>
+      <div class="segrow" id="ai-presets"><button class="seg active" data-preset="double">Double Tap</button><button class="seg" data-preset="single">Single Tap</button><button class="seg" data-preset="noise">Noise Only</button><button class="seg" data-preset="shake">Shaking</button></div>
+      <div class="field-label"><span>Sensor noise σ</span><output id="noise-out">0.08</output></div><input class="range" id="noise" type="range" min="0" max="0.35" step="0.01" value="0.08"><div class="limits"><span>Clean</span><span>Very noisy</span></div>
+      <div class="field-label"><span>Detection threshold</span><output id="threshold-out">0.60</output></div><input class="range" id="threshold" type="range" min="0.50" max="0.95" step="0.05" value="0.60"><div class="limits"><span>Sensitive</span><span>Conservative</span></div>
+      <div class="control-divider"></div><div class="field-label"><span>Train a tiny AI filter</span><output id="epoch-out">Epoch 0</output></div>
+      <div class="btnrow"><button type="button" class="btn green flex" id="train-btn">▶ Train AI · 40 epochs</button><button type="button" class="btn" id="epoch-btn">+1 Epoch</button><button type="button" class="btn" id="train-reset">Reset</button></div>
+      <div class="epoch-sidebar"><b>1 epoch = 280개 학습 데이터 전체를 한 번 학습</b><br>매 샘플마다 w[k]와 b를 갱신합니다. 40 epochs는 전체 학습 데이터를 40번 반복하는 것입니다.</div>
+      <div class="progress" aria-label="AI training progress"><span id="training-progress"></span></div>
+      <div class="statrow"><div class="stat"><small>Held-out accuracy*</small><b id="test-accuracy">50.0%</b></div><div class="stat"><small>Latest training loss</small><b id="loss-out">0.693</b></div></div>
+      <div class="hint"><strong>실제 학습이 진행됩니다.</strong><br>합성 센서 데이터로 단일 FIR 검출기의 계수 w[k]와 bias를 경사하강법으로 학습합니다. 다층 CNN은 아니며, CNN의 기본 선형 필터 연산을 보여주는 교육용 모델입니다.<br><br><span style="font-size:12.5px">*정확도는 독립 생성된 합성 시험 데이터 160개에서 계산하며, 실제 스마트폰 인식 성능을 의미하지 않습니다.</span></div>
+    </section>
+    <section class="control-set" id="control-causal">
+      <div class="field-label"><span>Sensor scenario</span></div><div class="segrow" id="causal-presets"><button class="seg active" data-preset="double">Double Tap</button><button class="seg" data-preset="single">Single Tap</button><button class="seg" data-preset="noise">Noise Only</button><button class="seg" data-preset="shake">Shaking</button></div>
+      <div class="hint"><strong>먼저 생각해 볼 문제</strong><br>n=11에서 첫 충격이 발생해도, 다음 충격이 아직 없을 때는 Single Tap인지 Double Tap인지 확정할 수 있을까요? <b>아래 Gesture Experiment</b>에서 관찰하세요.</div>
+      <div class="field-label"><span>Window length</span><output>5 samples</output></div><div class="hint"><strong>Blue · Causal</strong><br>y<sub>c</sub>[m] = (x[m] + ⋯ + x[m−4])/5<br><br><strong style="color:var(--orange)">Orange · Centered (non-causal)</strong><br>y<sub>nc</sub>[m] = (x[m−2] + ⋯ + x[m+2])/5<br><br>중심 평균의 <b>출력 인덱스 m</b>와 <b>실제 계산 가능 시각 n=m+2</b>는 구별해야 합니다.</div>
+    </section>
+    <section class="control-set" id="control-stable">
+      <div class="field-label"><span>Feedback coefficient a</span><output id="a-out">0.80</output></div><input id="a-range" class="range" type="range" min="-1.25" max="1.25" step="0.05" value="0.80"><div class="limits"><span>−1.25</span><span>1.25</span></div>
+      <div class="field-label"><span>Input x[n]</span></div><div class="segrow" id="stable-inputs"><button class="seg active" data-stable-input="step">Unit step (+1)</button><button class="seg" data-stable-input="alternate">Alternating ±1</button></div>
+      <div class="field-label"><span>Try these systems</span></div><div class="segrow"><button class="seg" data-a="0.80">a = 0.8 · Leaky</button><button class="seg" data-a="1.00">a = 1 · Accumulator</button><button class="seg" data-a="-1.00">a = −1 · Alternating</button></div>
+      <div class="statrow"><div class="stat"><small>BIBO condition</small><b id="stable-status">STABLE</b></div><div class="stat"><small>Σ |h[n]|</small><b id="abs-sum">2.50</b></div></div>
+      <div class="hint"><strong>무엇이 중요한가?</strong><br>입력 x[n]과 임펄스 응답 h[n]이 각각 유계여도, <b>∑|h[n]|</b>이 발산하면 어떤 유계 입력에서 출력이 발산할 수 있습니다. 아래에서 작은 센서 Bias 누적과 a=−1의 Convolution을 비교해 보세요.</div>
+    </section>
+  </aside>
+  <section class="panel" aria-label="실시간 신호 그래프">
+    <div class="panel-head"><div><h3 id="view-title">Impulse Response Explorer</h3><p id="view-subtitle" class="small" style="margin:3px 0 0">δ[n]을 입력하고 출력이 h[n]이 되는지 확인하세요.</p></div><span class="tag" id="view-tag">3.7 IMPULSE RESPONSE</span></div>
+
+<section class="ai-usecase" id="ai-usecase" hidden aria-label="실생활 Double Tap 응용">
+      <div class="ai-usecase-head"><strong>Why detect a Double Tap?</strong><span>실생활 응용 · 스마트폰 뒷면 두드리기</span></div>
+      <p>스마트폰 뒷면을 두 번 두드리면 스크린샷을 찍는 기능을 생각해 봅시다. 뒷면에 별도의 물리적 버튼이 없어도 스마트폰은 내부 센서의 <b>가속도 변화</b>를 이용해 두드림을 감지할 수 있습니다.</p>
+      <p>하지만 걷거나 스마트폰을 내려놓을 때도 충격이 발생합니다. 어떻게 하면 <b>사용자가 의도한 두 번의 두드림</b>과 흔들림을 구별할 수 있을까요?</p>
+      <div class="ai-usecase-summary">이번 실습: 가속도 x[n] → 학습형 FIR의 Convolution → Double Tap 점수 → 명령 실행 여부 판단</div>
+      <div class="dataset-foot">실제 휴대전화의 모든 구현이 이와 동일한 알고리즘을 사용하는 것은 아닙니다. 이 HTML은 원리를 설명하는 교육용 합성 센서 데이터와 작은 분류기를 사용합니다.</div>
+    </section>
+
+    <section class="ai-demo" id="ai-demo" hidden aria-label="AI 학습 설명">
+      <div class="ai-demo-top"><b>How does Train AI actually learn?</b>
+        <div class="ai-chips"><span class="ai-chip" id="ai-chip-target">Target label: Double Tap = 1</span><span class="ai-chip" id="ai-chip-bias">Bias b = 0.000</span><span class="ai-chip" id="ai-chip-epoch">Epoch 0</span></div>
+      </div>
+      <div class="model-spec">
+        <div class="model-spec-heading"><span class="learning-step">MODEL &amp; LEARNING TARGET</span><strong>25-tap causal FIR + bias + sigmoid</strong></div>
+        <div class="model-equations">
+          <div><span>① Linear FIR + bias</span><strong>z[n] = Σ<sub>k=0</sub><sup>24</sup> w[k]x[n−k] + b</strong></div>
+          <div><span>② Binary classification</span><strong>P[n] = σ(z[n])</strong></div>
+          <div><span>③ Parameters to learn</span><strong>θ = {w[0], …, w[24], b}</strong><small>25 FIR weights + 1 bias = <b>26 unknowns</b></small></div>
+        </div>
+        <p><b>학습 목표:</b> Label t(더블탭=1, 기타=0)와 예측 확률 P의 차이를 나타내는 <b>Binary Cross-Entropy (BCE)</b>를 줄이도록 26개의 파라미터를 찾습니다. 정답은 가속도의 크기가 아닌 <b>패턴의 종류</b>입니다.</p>
+        <div class="model-rule">선형 FIR 부분의 Impulse Response는 <b>h[k] = w[k]</b>입니다. 다만 bias와 sigmoid를 포함한 전체 분류기는 LTI 시스템이 아닙니다.</div>
+      </div>
+      <div class="epoch-explainer"><strong>What is 1 epoch?</strong><span>학습 데이터 <b>280개(더블탭 140 + 기타 140)</b>를 모두 한 번씩 사용하여 SGD로 계수를 갱신하는 <b>1회 전체 순회</b>입니다. <b>40 epochs</b>이면 이 280개 데이터셋을 40회 반복합니다. 별도 테스트 데이터 160개는 가중치를 학습하는 데 사용하지 않습니다.</span></div>
+      <div class="ai-card-grid">
+        <div class="ai-card"><strong>What is learned?</strong><p>필터의 시간별 가중치 <b>w[0]~w[24]</b>와 출력 기준을 조절하는 <b>bias b</b>를 학습합니다.<span class="formula-mini">z[n] = Σ w[k]x[n−k] + b</span></p></div>
+        <div class="ai-card"><strong>How is the decision made?</strong><p>가중합 z[n]을 sigmoid에 통과시켜 확률처럼 해석합니다.<span class="formula-mini">P[n] = σ(z[n])</span></p></div>
+        <div class="ai-card"><strong>What does training do?</strong><p>정답 t와 예측 P의 BCE를 줄이도록 경사하강법(SGD)으로 w[k], b를 조금씩 업데이트합니다.<span class="formula-mini">w ← w − η∂L/∂w</span></p></div>
+      </div>
+      <div class="inflow-actions">
+        <span>학습 전에는 w[k]=0, b=0 → P=0.5입니다. 아래 그래프와 학습 데이터 예측값을 비교해 보세요.</span>
+        <div class="inflow-buttons"><button type="button" class="btn" id="ai-epoch-inline">+1 Epoch</button><button type="button" class="btn green" id="ai-train-inline">▶ Train 40 Epochs</button></div>
+      </div>
+      <div class="ai-mini-grid">
+        <div class="ai-mini"><div class="ai-mini-head"><b>Current input window</b><span id="ai-mini-note1">x[n−k] for k = 0…24</span></div><canvas id="ai-mini-window" role="img" aria-label="현재 입력 윈도우"></canvas></div>
+        <div class="ai-mini"><div class="ai-mini-head"><b>Contribution by tap</b><span id="ai-mini-note2">w[k]x[n−k]</span></div><canvas id="ai-mini-contrib" role="img" aria-label="탭별 기여도"></canvas></div>
+        <div class="ai-mini"><div class="ai-mini-head"><b>Raw score before sigmoid</b><span id="ai-mini-note3">z[n] timeline</span></div><canvas id="ai-mini-score" role="img" aria-label="시그모이드 전 선형 점수"></canvas></div>
+        <div class="ai-mini"><div class="ai-mini-head"><b>Loss vs. epoch</b><span id="ai-mini-note4">cross-entropy loss</span></div><canvas id="ai-mini-loss" role="img" aria-label="에폭별 손실"></canvas></div>
+      </div>
+      <div class="ai-summary" id="ai-summary">학습 전에는 모든 가중치가 0이므로, z[n]=0이고 P[n]=0.5입니다. Train AI를 누르면 double-tap 패턴의 두 충격에 맞는 지연 위치의 가중치가 점점 조정됩니다.</div>
+    </section>
+
+    <section class="dataset" id="training-dataset" hidden aria-label="지도학습 데이터 뷰어">
+      <h4>Training Data Viewer · 280 labeled examples</h4>
+      <p class="dataset-lead">아래의 단일 예시 파형 하나만 학습하는 것이 아닙니다. 내부에서 서로 다른 <b>25-sample 가속도 창 280개</b>를 만들어 정답(Label)을 붙이고, 그 정답과 AI 예측이 일치하도록 학습합니다.</p>
+      <div class="dataset-metrics">
+        <div class="dataset-metric"><b>140</b><span>Double Tap · t=1</span></div>
+        <div class="dataset-metric"><b>140</b><span>Other · t=0</span></div>
+        <div class="dataset-metric"><b>160</b><span>별도 테스트 데이터</span></div>
+      </div>
+      <div class="dataset-flow" aria-label="지도학습 처리 순서">
+        <div class="dataset-step"><small>STEP 01</small><b>Signal x[m]</b><span>서로 다른 충격·노이즈 생성</span></div>
+        <div class="dataset-step"><small>STEP 02</small><b>Ground Truth</b><span>Double=1, Other=0</span></div>
+        <div class="dataset-step"><small>STEP 03</small><b>AI Prediction</b><span>FIR + bias + sigmoid</span></div>
+        <div class="dataset-step"><small>STEP 04</small><b>BCE Loss</b><span>정답과 예측의 오차</span></div>
+        <div class="dataset-step"><small>STEP 05</small><b>SGD Update</b><span>w[k], b 갱신</span></div>
+      </div>
+      <div class="dataset-select">
+        <div class="dataset-head"><strong>Explore an actual training sample</strong><div class="dataset-actions">
+          <button type="button" class="btn" data-dataset-type="double">Double Tap</button>
+          <button type="button" class="btn" data-dataset-type="singleearly">Single Tap</button>
+          <button type="button" class="btn" data-dataset-type="wrong">Wrong interval</button>
+          <button type="button" class="btn" data-dataset-type="noise">Noise Only</button>
+        </div></div>
+        <div class="dataset-pickers">
+          <button type="button" class="btn" id="dataset-prev" aria-label="이전 학습 샘플">◀</button>
+          <label for="dataset-index">Dataset ID</label>
+          <input type="range" class="range" id="dataset-index" min="1" max="280" step="1" value="1" aria-label="학습 데이터 인덱스">
+          <output id="dataset-index-out">001 / 280</output>
+          <button type="button" class="btn" id="dataset-next" aria-label="다음 학습 샘플">▶</button>
+        </div>
+        <div class="dataset-plotgrid">
+          <div class="dataset-plotbox">
+            <div class="dataset-title"><b>Input signal: one 25-sample window</b><span id="dataset-wave-note">Synthetic accelerometer signal</span></div>
+            <canvas id="dataset-wave" role="img" aria-label="선택한 학습 데이터의 가속도 그래프"></canvas>
+            <div class="dataset-foot">X축 m은 샘플 창 내부의 시간 순서(0~24)입니다. 모델의 Tap index k=0은 이 창의 마지막(최신) 샘플을 뜻합니다.</div>
+          </div>
+          <div class="dataset-plotbox">
+            <div class="dataset-title"><b>Ground Truth vs. AI Prediction</b><span id="dataset-sample-type">Double Tap</span></div>
+            <div class="dataset-score">
+              <div><div class="dataset-score-title"><span>정답(Label, t)</span><b id="dataset-truth">1 · Double Tap</b></div><div class="dataset-track truth"><span id="dataset-truth-bar" style="width:100%"></span></div></div>
+              <div><div class="dataset-score-title"><span>AI 예측 확률 P(Double Tap)</span><b id="dataset-pred">0.500</b></div><div class="dataset-track pred"><span id="dataset-pred-bar" style="width:50%"></span></div></div>
+            </div>
+            <div class="dataset-result" id="dataset-classification">학습 전: P=0.5 (아직 구분하지 못함)</div>
+            <div class="dataset-loss"><span>Selected sample · Binary Cross-Entropy</span><b id="dataset-bce">0.6931</b></div>
+            <div class="dataset-foot">분류 표시는 학습 데이터 설명용 기준 P ≥ 0.5를 사용합니다. 위의 실시간 검출 Threshold(기본 0.60)는 별도 설정이며 학습 Loss 계산에는 영향을 주지 않습니다.</div>
+          </div>
+        </div>
+        <div class="dataset-formula" id="dataset-formula">t=1이면 Loss = −ln(P), t=0이면 Loss = −ln(1−P)입니다.</div>
+        <div class="dataset-foot"><b>실습 방법:</b> Dataset ID를 바꾸며 파형과 정답이 어떻게 다른지 살펴보고, <b>+1 Epoch</b> 또는 <b>Train AI</b>를 누르세요. 같은 샘플의 AI 예측 확률과 BCE Loss가 학습에 따라 어떻게 변하는지 관찰할 수 있습니다. 160개 시험 데이터는 학습에 사용되지 않습니다.</div>
+      </div>
+    </section>
+
+    <section class="result-heading" id="ai-result-heading" hidden aria-label="학습된 모델 결과">
+      <div class="learning-step">FINAL LEARNED RESULTS</div>
+      <h4>How does the learned filter respond to accelerometer data?</h4>
+      <p>학습 데이터에서 얻은 <b>계수 w[k]</b>와 <b>bias b</b>를 고정한 후, 화면의 센서 입력 x[n]에 적용합니다. 아래 세 그래프는 <b>입력 가속도 → 학습된 FIR 계수 → 시간별 Double Tap 예측 확률</b>을 순서대로 보여줍니다.</p>
+    </section>
+
+    <section class="learn-panel" id="gesture-demo" hidden aria-label="Double Tap 인과성 실험">
+      <div class="learning-step">PART 03 · CAUSALITY IN A REAL SMARTPHONE</div>
+      <h4>Can a real-time detector know the second tap before it happens?</h4>
+      <p>아래 두 시나리오는 첫 번째 충격(n=11)이 같고, <b>두 번째 충격(n=22)이 발생하기 전까지 입력 신호가 완전히 같습니다.</b> 현재 시점을 바꿔 두 신호가 언제 구별 가능한지 확인하세요.</p>
+      <div class="lab-btnrow"><button type="button" class="btn" data-gesture-jump="16">① Before 2nd tap · n=16</button><button type="button" class="btn" data-gesture-jump="23">② After 2nd tap · n=23</button><button type="button" class="btn" id="gesture-replay">▶ Replay 16→25</button></div>
+      <div class="scrub"><label for="gesture-range"><span>Current sensor time (n)</span><output id="gesture-out">n = 16</output></label><input type="range" class="range" id="gesture-range" min="9" max="30" step="1" value="16"><div class="limits"><span>before second tap</span><span>after second tap</span></div></div>
+      <div class="gesture-plots">
+        <div class="mini-plot"><strong>Single Tap · x<sub>S</sub>[n]</strong><canvas id="gesture-single" role="img" aria-label="Single Tap 관찰 파형"></canvas></div>
+        <div class="mini-plot"><strong>Double Tap · x<sub>D</sub>[n]</strong><canvas id="gesture-double" role="img" aria-label="Double Tap 관찰 파형"></canvas></div>
+      </div>
+      <div class="lab-status" id="gesture-status" aria-live="polite">n=16에서는 두 상황을 구분할 수 없습니다.</div>
+      <div class="learning-explain"><b>실시간 인식:</b> 현재까지 도착한 데이터만 사용합니다. <b>오프라인 분석:</b> 나중에 수집한 신호 전체를 볼 수 있지만, 이것은 미래를 예측했다는 뜻이 아닙니다. 아래의 Centered Moving Average는 동일한 원리를 <b>출력 시간 인덱스</b>에서 보여줍니다.</div>
+    </section>
+    <div class="plots">
+      <div class="graph"><div class="graphhead"><b id="g1-title">Input δ[n]</b><span id="g1-note">단위 충격</span></div><canvas id="plot1" role="img" aria-label="첫 번째 신호 그래프"></canvas></div>
+      <div class="graph"><div class="graphhead"><b id="g2-title">System response h[n]</b><span id="g2-note">임펄스 응답</span></div><canvas id="plot2" role="img" aria-label="두 번째 신호 그래프"></canvas></div>
+      <div class="graph tall"><div class="graphhead"><b id="g3-title">Output for Double Tap</b><span id="g3-note">x[n] * h[n]</span></div><canvas id="plot3" role="img" aria-label="세 번째 신호 그래프"></canvas></div>
+    </div>
+
+    <section class="learn-panel" id="bibo-demo" hidden aria-label="BIBO 물리적 의미 및 합성곱 실습">
+      <div class="learning-step">PART 04 · STABILITY IN THE PHYSICAL WORLD</div>
+      <h4>Experiment A · Small sensor bias accumulates over time</h4>
+      <p>스마트폰이 정지해 실제 가속도가 0이더라도, 센서가 작은 일정한 Bias <b>x[n]=0.1</b>을 갖는다면? 동일한 입력을 일반 누적기와 감쇠 누적기에 넣어 봅니다.</p>
+      <div class="lab-compare-grid">
+        <div class="boxish"><b>Accumulator · a=1</b> y[n] = y[n−1]+x[n] <br> h[n] = u[n], &nbsp; y[n] = 0.1(n+1)</div>
+        <div class="boxish"><b>Leaky Filter · a=0.8</b> y[n] = 0.8y[n−1]+x[n] <br> h[n] = 0.8ⁿu[n], &nbsp; y[n] → 0.5</div>
+      </div>
+      <div class="lab-comparison"><strong>Identical bounded sensor bias → different outputs</strong><canvas id="bias-plot" role="img" aria-label="누적기와 Leaky Filter의 출력 비교"></canvas><div class="lab-steps"><span class="lab-chip">Blue · Accumulator</span><span class="lab-chip">Green · Leaky</span></div></div>
+      <div class="learning-explain">작은 일정 입력도 계속 누적되면 출력은 증가합니다. <b>불안정성은 계수를 무조건 크게 설정해서만 발생하는 현상이 아닙니다.</b> 경계값 a=1인 적분(누적) 시스템에서도 발생합니다.</div>
+      <h4 style="margin-top:23px">Experiment B · Both x[n] and h[n] are bounded. Why does y[n] diverge?</h4>
+      <p><b>a=−1</b>이고 <b>x[n]=(−1)ⁿ</b>, <b>h[n]=(−1)ⁿu[n]</b>이라면 두 신호의 크기는 항상 1 이하입니다. 그러나 Convolution의 곱이 모두 같은 부호로 더해집니다.</p>
+      <div class="scrub"><label for="conv-range"><span>Convolution index n</span><output id="conv-out">n = 4</output></label><input class="range" type="range" id="conv-range" min="0" max="12" step="1" value="4"><div class="limits"><span>n=0</span><span>n=12</span></div></div>
+      <div class="gesture-plots" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <div class="mini-plot"><strong>Input x[k]</strong><canvas id="conv-input" role="img" aria-label="Convolution 입력 신호"></canvas></div>
+        <div class="mini-plot"><strong>Time-reversed h[n−k]</strong><canvas id="conv-kernel" role="img" aria-label="Time reversed impulse response"></canvas></div>
+        <div class="mini-plot"><strong>Product x[k]h[n−k]</strong><canvas id="conv-product" role="img" aria-label="Convolution 각 항의 곱"></canvas></div>
+      </div>
+      <div class="lab-status ready" id="conv-explain" aria-live="polite">n=4: 다섯 개 항이 모두 양수이므로 y[4]=5</div>
+      <div class="lab-formula">y[n] = Σ<sub>k=0</sub><sup>n</sup> (−1)<sup>k</sup>(−1)<sup>n−k</sup> = (n+1)(−1)<sup>n</sup></div>
+      <div class="learning-explain"><b>BIBO 핵심:</b> h[n]이 유계라는 사실만으로 충분하지 않습니다. <b>Σ|h[n]| &lt; ∞</b>이어야 모든 유계 입력에 대해 y[n]도 유계가 됩니다. 여기서는 Σ|h[n]| = 1+1+1+⋯ = ∞입니다.</div>
+    </section>
+    <section class="lesson-bridge" id="bridge-impulse" hidden aria-label="Part 01에서 Part 02로 연결">
+      <div class="learning-step">NEXT QUESTION · PART 01 → PART 02</div>
+      <h4>Noise reduction is not the same as recognizing a gesture.</h4>
+      <p><b>Part 01에서 해결한 문제:</b> Moving Average(FIR)와 Exponential Smoother(IIR)는 충격 응답의 높이와 지속 시간을 바꾸며 노이즈를 줄일 수 있습니다.</p>
+      <p><b>아직 남아 있는 문제:</b> 스마트폰을 두 번 두드리는 동작뿐 아니라 걷기·흔들림·한 번의 충격도 센서 피크를 만듭니다. 평균화만으로 <b>의도적인 Double Tap과 다른 움직임을 자동 구별하도록 설계된 것은 아닙니다.</b> 전통적인 규칙 기반 검출도 가능하지만 간격과 형태의 기준을 직접 정해야 합니다.</p>
+      <div class="bridge-question"><b>그렇다면?</b> 정답이 붙은 여러 신호를 이용해, 두 번의 충격 패턴에 반응하는 FIR 계수 자체를 데이터로부터 학습해 보면 어떨까요?</div>
+      <button type="button" class="btn primary bridge-go" data-go-tab="ai">Continue to Part 02 · Train AI Filter →</button>
+    </section>
+
+    <section class="lesson-bridge" id="bridge-ai" hidden aria-label="Part 02에서 Part 03, Part 04로 연결">
+      <div class="learning-step">NEXT QUESTIONS · FROM AI MODEL TO REAL-TIME SYSTEM</div>
+      <h4>A trained detector is not yet a complete real-time system.</h4>
+      <p>Part 02에서 더블탭 검출을 위한 w[k], b를 학습했습니다. 이제 <b>실제 스마트폰에서 실시간으로 동작시킬 때</b> 고려해야 할 시스템 특성이 남아 있습니다.</p>
+      <div class="bridge-two">
+        <div class="bridge-card">
+          <span>PART 03 · CAUSALITY</span>
+          <strong>미래 샘플을 볼 수 있을까?</strong>
+          <p>이 예제의 학습형 FIR는 x[n], …, x[n−24]만 사용하므로 인과적입니다. 만약 판단에 미래 샘플을 추가하면, 데이터가 도착할 때까지 <b>실제로는 기다려야</b> 합니다.</p>
+          <button type="button" class="btn bridge-go" data-go-tab="causal">Go to Part 03 →</button>
+        </div>
+        <div class="bridge-card">
+          <span>PART 04 · BIBO STABILITY</span>
+          <strong>필터 출력이 무한히 커질 수 있을까?</strong>
+          <p><b>유한 길이 FIR 자체는 BIBO 안정</b>입니다. 그러나 센서 Bias를 누적하거나 피드백 필터를 함께 사용하면, 작은 오차도 계속 쌓일 수 있습니다. 누적기와 Leaky Filter를 비교해 보세요.</p>
+          <button type="button" class="btn bridge-go" data-go-tab="stable">Go to Part 04 →</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="causal-demo" id="causal-demo" hidden aria-label="인과성 시간 실습">
+      <div class="causal-demo-top"><b>When is the output actually available?</b>
+        <div class="causal-actions"><button type="button" class="btn" data-causal-jump="9">① n = 9</button><button type="button" class="btn" data-causal-jump="11">② n = 11</button><button type="button" class="btn primary" id="causal-play-demo">▶ Replay 7→13</button></div>
+      </div>
+      <div class="causal-timeline"><span class="causal-chip">Blue: measured samples</span><span class="causal-chip future">Orange: needed future samples</span><span class="causal-chip ghost">Gray: future shown faintly for teaching only</span></div>
+      <div class="causal-status" id="causal-status" aria-live="polite">현재 시점의 데이터만 사용하여 출력 가능 시각을 계산합니다.</div>
+      <div class="causal-kernels">
+        <h4>Impulse Response와 Causality</h4>
+        <p>같은 길이 5인 이동평균이지만, <b>h[k]가 음의 인덱스에 존재하는지</b> 확인하세요. 음의 k 영역은 연한 주황색입니다.</p>
+        <div class="causal-kernels-grid">
+          <div class="kernel-panel"><strong>CAUSAL · h<sub>c</sub>[k]</strong><svg viewBox="0 0 320 116" role="img" aria-label="임펄스 응답의 음의 인덱스와 양의 인덱스"><rect x="11" y="10" width="108" height="72" fill="#fff2e5" opacity=".72" rx="3"/><line x1="13" y1="81" x2="313" y2="81" stroke="#bdcbd9" stroke-width="1.2"/><line x1="121" y1="8" x2="121" y2="86" stroke="#93a9bd" stroke-width="1.4" stroke-dasharray="3 4"/><text x="19" y="100" font-size="12" fill="#617b91" text-anchor="middle">-3</text><text x="53" y="100" font-size="12" fill="#617b91" text-anchor="middle">-2</text><text x="87" y="100" font-size="12" fill="#617b91" text-anchor="middle">-1</text><text x="121" y="100" font-size="12" fill="#617b91" text-anchor="middle">0</text><line x1="121" y1="81" x2="121" y2="37" stroke="#2776bb" stroke-width="3"/><circle cx="121" cy="37" r="4" fill="#2776bb"/><text x="155" y="100" font-size="12" fill="#617b91" text-anchor="middle">1</text><line x1="155" y1="81" x2="155" y2="37" stroke="#2776bb" stroke-width="3"/><circle cx="155" cy="37" r="4" fill="#2776bb"/><text x="189" y="100" font-size="12" fill="#617b91" text-anchor="middle">2</text><line x1="189" y1="81" x2="189" y2="37" stroke="#2776bb" stroke-width="3"/><circle cx="189" cy="37" r="4" fill="#2776bb"/><text x="223" y="100" font-size="12" fill="#617b91" text-anchor="middle">3</text><line x1="223" y1="81" x2="223" y2="37" stroke="#2776bb" stroke-width="3"/><circle cx="223" cy="37" r="4" fill="#2776bb"/><text x="257" y="100" font-size="12" fill="#617b91" text-anchor="middle">4</text><line x1="257" y1="81" x2="257" y2="37" stroke="#2776bb" stroke-width="3"/><circle cx="257" cy="37" r="4" fill="#2776bb"/><text x="291" y="100" font-size="12" fill="#617b91" text-anchor="middle">5</text><text x="311" y="111" font-size="11" fill="#59738a" text-anchor="end">k</text></svg><p>k = 0,1,2,3,4 (미래 입력 불필요)</p></div>
+          <div class="kernel-panel"><strong>NON-CAUSAL · h<sub>nc</sub>[k]</strong><svg viewBox="0 0 320 116" role="img" aria-label="임펄스 응답의 음의 인덱스와 양의 인덱스"><rect x="11" y="10" width="108" height="72" fill="#fff2e5" opacity=".72" rx="3"/><line x1="13" y1="81" x2="313" y2="81" stroke="#bdcbd9" stroke-width="1.2"/><line x1="121" y1="8" x2="121" y2="86" stroke="#93a9bd" stroke-width="1.4" stroke-dasharray="3 4"/><text x="19" y="100" font-size="12" fill="#617b91" text-anchor="middle">-3</text><text x="53" y="100" font-size="12" fill="#617b91" text-anchor="middle">-2</text><line x1="53" y1="81" x2="53" y2="37" stroke="#df8737" stroke-width="3"/><circle cx="53" cy="37" r="4" fill="#df8737"/><text x="87" y="100" font-size="12" fill="#617b91" text-anchor="middle">-1</text><line x1="87" y1="81" x2="87" y2="37" stroke="#df8737" stroke-width="3"/><circle cx="87" cy="37" r="4" fill="#df8737"/><text x="121" y="100" font-size="12" fill="#617b91" text-anchor="middle">0</text><line x1="121" y1="81" x2="121" y2="37" stroke="#df8737" stroke-width="3"/><circle cx="121" cy="37" r="4" fill="#df8737"/><text x="155" y="100" font-size="12" fill="#617b91" text-anchor="middle">1</text><line x1="155" y1="81" x2="155" y2="37" stroke="#df8737" stroke-width="3"/><circle cx="155" cy="37" r="4" fill="#df8737"/><text x="189" y="100" font-size="12" fill="#617b91" text-anchor="middle">2</text><line x1="189" y1="81" x2="189" y2="37" stroke="#df8737" stroke-width="3"/><circle cx="189" cy="37" r="4" fill="#df8737"/><text x="223" y="100" font-size="12" fill="#617b91" text-anchor="middle">3</text><text x="257" y="100" font-size="12" fill="#617b91" text-anchor="middle">4</text><text x="291" y="100" font-size="12" fill="#617b91" text-anchor="middle">5</text><text x="311" y="111" font-size="11" fill="#59738a" text-anchor="end">k</text></svg><p>k = −2,−1,0,1,2 (미래 입력 필요)</p></div>
+        </div>
+        <div class="causal-rule">DTLTI Causality: h[k] = 0 for every k &lt; 0</div>
+      </div>
+    </section>
+    <div class="live-strip"><div class="metric"><small id="m1-label">Time index</small><strong id="m1-value">n = 12</strong></div><div class="metric"><small id="m2-label">Current output</small><strong id="m2-value">0.000</strong></div><div class="metric"><small id="m3-label">Observation</small><strong id="m3-value">h[n] = y[n]</strong></div></div>
+    <div class="transport"><div class="scrub"><label for="n-range"><span>Time index n <span class="subtle">· 샘플 단위</span></span><output id="n-out">n = 12</output></label><input class="range" id="n-range" type="range" min="0" max="69" step="1" value="12"><div class="limits"><span>n = 0</span><span id="max-n">n = 69</span></div></div><div class="btnrow"><button type="button" class="btn" id="back-btn" aria-label="이전 인덱스">◀</button><button type="button" class="btn primary" id="play-btn">▶ Play</button><button type="button" class="btn" id="forward-btn" aria-label="다음 인덱스">▶</button><button type="button" class="btn" id="restart-btn">↺</button></div></div>
+    <div class="explain"><strong id="insight-head">Physical meaning</strong><div class="formula" id="insight-formula">δ[n] * h[n] = h[n]</div><p id="insight-body">시스템에 단위 충격을 가했을 때 나타나는 출력이 바로 임펄스 응답입니다.</p></div>
+  </section>
+</div>
+<div class="challenge-area"><section class="challenge"><div class="cap">Think &amp; Predict</div><h3 id="challenge-title">필터를 바꾸기 전에 결과를 예측해 보세요.</h3><p id="challenge-q">이동평균 필터의 길이를 4에서 8로 늘리면, 한 번의 충격이 출력에 미치는 크기와 지속 시간은 각각 어떻게 달라질까요?</p><details id="answer"><summary>해설 보기</summary><p id="challenge-answer">길이가 늘어나면 임펄스 응답은 더 낮고 더 넓은 직사각형으로 바뀝니다. 각 샘플의 크기는 1/M, 0이 아닌 구간은 M개입니다.</p></details></section>
+<section class="challenge"><div class="cap">Connection to Lecture</div><h3 id="lecture-title">3.7 Impulse Response</h3><p id="lecture-text">LTI 시스템의 출력은 입력을 이동한 임펄스들의 합으로 분해한 뒤 각 응답을 모두 더해서 구할 수 있습니다.</p><div class="disclaimer" id="lecture-note">본 예제의 신호는 가상의 가속도 데이터입니다. 수치는 실제 스마트폰에서 측정한 값이 아닙니다.</div></section></div>
+</main>
+<footer class="wrap footer"><span>Signals &amp; Systems · CHO Lab, Pusan National University · Educational use</span><span>Self-contained interactive HTML · No external libraries</span></footer>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id), Q=(sel)=>[...document.querySelectorAll(sel)];
+const M=25,N=70,pulse=[0.12,0.94,0.46,-0.29,-0.11],COL={blue:'#2776bb',orange:'#df8737',green:'#0c977e',purple:'#7967bc',gray:'#9eafbf',grid:'#e8edf4'};
+let seed=13423;function rnd(){seed=(1664525*seed+1013904223)>>>0;return seed/4294967296};function gauss(){const a=Math.max(1e-9,rnd()),b=rnd();return Math.sqrt(-2*Math.log(a))*Math.cos(2*Math.PI*b)}
+function clamp(x,a,b){return Math.max(a,Math.min(b,x))}function sigmoid(z){z=clamp(z,-35,35);return 1/(1+Math.exp(-z))}const fmt=x=>(Math.abs(x)<.0005?'0.000':x.toFixed(3));
+let S={tab:'impulse',n:1,playing:false,filter:'ma',ma:4,alpha:0.7,preset:'double',noise:.08,threshold:.6,a:.8,stabInput:'step',convN:4,gestureN:16,epoch:0,loss:.693,lossHist:[.693],w:Array(M).fill(0),bias:0,trainLock:false,datasetIndex:0};
+let displayNoise=makeNoise(N,0.95), train=[],test=[];let playTimer=null,trainingTimer=null;
+function makeNoise(len,sd){let x=[];for(let i=0;i<len;i++)x.push(gauss()*sd);return x}
+function addTap(x,p,amp=1){for(let j=0;j<pulse.length;j++){let i=p+j;if(i>=0&&i<x.length)x[i]+=amp*pulse[j]}}
+function makeSignal(type,noise=S.noise){let x=displayNoise.map(v=>v*noise);if(type==='double'){addTap(x,11,1);addTap(x,22,.98)}else if(type==='single'){addTap(x,11,1)}else if(type==='shake'){for(let i=0;i<x.length;i++)x[i]+=.15*Math.sin(.30*i)+.08*Math.sin(.77*i)}return x}
+function makeTrainSample(label){const x=makeNoise(M,.075),type=label?'double':['singleearly','singlelate','wrong','noise'][Math.floor(rnd()*4)];
+if(type==='double'){const p=3+Math.floor(rnd()*3),dt=10+Math.floor(rnd()*3);addTap(x,p,.85+.35*rnd());addTap(x,p+dt,.85+.35*rnd())}
+if(type==='singleearly')addTap(x,3+Math.floor(rnd()*3),.75+.7*rnd());
+if(type==='singlelate')addTap(x,13+Math.floor(rnd()*4),.75+.7*rnd());
+if(type==='wrong'){const p=3+Math.floor(rnd()*3),dt=[5,6,7,16][Math.floor(rnd()*4)];addTap(x,p,1);addTap(x,p+dt,1)}
+if(type==='noise'){for(let j=0;j<M;j++)x[j]+=.1*gauss()}
+return {x:x.reverse(),label,type};}
+function buildDataset(){seed=1337;train=[];test=[];for(let i=0;i<280;i++)train.push(makeTrainSample(i%2));for(let i=0;i<160;i++)test.push(makeTrainSample(i%2));}
+function scoreVec(x){let v=S.bias;for(let k=0;k<M;k++)v+=S.w[k]*x[k];return sigmoid(v)}
+function testAccuracy(){let correct=0;for(const s of test){const p=scoreVec(s.x);if((p>=.5)==Boolean(s.label))correct++}return correct/test.length}
+function trainEpoch(){ // stochastic gradient descent; forward model is one causal FIR + bias + sigmoid
+ let order=Array.from({length:train.length},(_,i)=>i);for(let i=order.length-1;i>0;i--){let j=Math.floor(rnd()*(i+1));[order[i],order[j]]=[order[j],order[i]]}
+ let sum=0;const lr=.045,reg=.002;
+ for(const idx of order){const s=train[idx],p=scoreVec(s.x);sum+=-(s.label*Math.log(Math.max(p,1e-9))+(1-s.label)*Math.log(Math.max(1-p,1e-9)));let d=p-s.label;
+  for(let k=0;k<M;k++)S.w[k]-=lr*(d*s.x[k]+reg*S.w[k]);S.bias-=lr*d;}
+ S.epoch++;S.loss=sum/train.length; if(!Array.isArray(S.lossHist))S.lossHist=[]; S.lossHist.push(S.loss); if(S.lossHist.length>180)S.lossHist.shift();}
+function stopTraining(){if(trainingTimer!==null){clearInterval(trainingTimer);trainingTimer=null}S.trainLock=false;$('train-btn').textContent='▶ Train AI · 40 epochs';$('ai-train-inline').textContent='▶ Train 40 Epochs';$('epoch-btn').disabled=false;$('ai-epoch-inline').disabled=false;render()}
+function trainingBatch(){if(S.trainLock){stopTraining();return}pause();S.trainLock=true;S.trainProgress=0;$('epoch-btn').disabled=true;$('ai-epoch-inline').disabled=true;$('train-btn').textContent='Ⅱ Stop Training';$('ai-train-inline').textContent='Ⅱ Stop Training';let remaining=40;trainingTimer=setInterval(()=>{for(let i=0;i<2&&remaining>0;i++,remaining--)trainEpoch();S.trainProgress=(40-remaining)/40*100;render();if(remaining<=0)stopTraining()},80)}
+function resetTraining(){stopTraining();S.w.fill(0);S.bias=0;S.loss=.693;S.epoch=0;S.trainProgress=0;S.lossHist=[S.loss];render()}
+function impulseFilter(){if(S.filter==='ma')return Array.from({length:N},(_,n)=>n<S.ma?1/S.ma:0);if(S.filter==='exp')return Array.from({length:N},(_,n)=>(1-S.alpha)*Math.pow(S.alpha,n));return Array.from({length:N},(_,n)=>n<M?S.w[n]:0)}
+function conv(x,h){return x.map((_,n)=>{let v=0;for(let k=0;k<=n&&k<h.length;k++)v+=x[n-k]*h[k];return v})}
+function aiTimeline(x){return Array.from({length:N},(_,n)=>{if(n<M-1)return null;let v=S.bias;for(let k=0;k<M;k++)v+=S.w[k]*x[n-k];return sigmoid(v)})}
+function aiRawTimeline(x){return Array.from({length:N},(_,n)=>{if(n<M-1)return null;let v=S.bias;for(let k=0;k<M;k++)v+=S.w[k]*x[n-k];return v})}
+function aiWindowAt(x,n){return Array.from({length:M},(_,k)=>n-k>=0?x[n-k]:0)}
+function aiContribAt(x,n){const win=aiWindowAt(x,n);return win.map((v,k)=>v*S.w[k])}
+function aiScoreDetail(x,n){const win=aiWindowAt(x,n), contrib=aiContribAt(x,n); let z=S.bias; for(const v of contrib)z+=v; return {win,contrib,z,p:sigmoid(z)}}
+function smoothCausal(x){return x.map((_,n)=>{let t=0;for(let k=0;k<5;k++)if(n-k>=0)t+=x[n-k];return t/5})}
+function smoothCentered(x){return x.map((_,n)=>{if(n+2>=x.length)return null;let t=0;for(let k=-2;k<=2;k++)if(n+k>=0)t+=x[n+k];return t/5})}
+function stabilityData(){let x=Array.from({length:N},(_,n)=>S.stabInput==='step'?1:(n%2===0?1:-1)),h=x.map((_,n)=>Math.pow(S.a,n)),y=x.map(()=>0),last=0;for(let n=0;n<N;n++){last=S.a*last+x[n];y[n]=last}return{x,h,y}}
+function setText(id,s){$(id).textContent=s}function setMetric(labels,vals){for(let i=1;i<=3;i++){setText('m'+i+'-label',labels[i-1]);setText('m'+i+'-value',vals[i-1]);$('m'+i+'-value').className='';}}
+ function chart(canvas,series,opts={}){
+  const cr=canvas.getBoundingClientRect();if(cr.width<1)return;
+  const dpr=Math.min(window.devicePixelRatio||1,2),w=cr.width,h=cr.height;
+  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+  const c=canvas.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,h);
+  // Reserve independent lines for x-axis tick labels and the axis title.
+  // A separate left margin holds the rotated y-axis title and numeric ticks.
+  const L=82,R=w-22,T=17,B=h-54,length=opts.length||N;
+  const px=n=>L+n/(length-1)*(R-L);
+  const all=[];series.forEach(ss=>ss.data.forEach(v=>{if(v!==null&&Number.isFinite(v))all.push(v)}));
+  let min=(opts.yMin!==undefined)?opts.yMin:Math.min(0,...all),max=(opts.yMax!==undefined)?opts.yMax:Math.max(0,...all);
+  if(!Number.isFinite(min)||!Number.isFinite(max)){min=0;max=1}
+  if(Math.abs(max-min)<1e-8){min-=.5;max+=.5}
+  const pad=(max-min)*.11;min-=pad;max+=pad;
+  const py=v=>B-(v-min)/(max-min)*(B-T);
+  if(Number.isInteger(opts.futureAfter) && opts.futureAfter<length-1){
+    c.fillStyle='rgba(210,221,232,.21)'; const edge=px(opts.futureAfter)+3;
+    c.fillRect(edge,T,Math.max(0,R-edge),B-T);
+  }
+  if(opts.windows){for(const zone of opts.windows){const x1=px(clamp(zone.from,0,length-1)),x2=px(clamp(zone.to,0,length-1));c.fillStyle=zone.color;c.fillRect(x1-3,T,x2-x1+6,B-T)}}
+  c.lineWidth=1;c.strokeStyle=COL.grid;c.font='11px Arial, sans-serif';c.textAlign='right';c.textBaseline='middle';
+  for(let j=0;j<=4;j++){
+    const val=min+(max-min)*j/4,yy=py(val);
+    c.beginPath();c.moveTo(L,yy);c.lineTo(R,yy);c.stroke();
+    c.fillStyle='#657b92';c.fillText(Math.abs(val)<1e-6?'0':(Math.abs(val)>999?val.toExponential(1):val.toFixed(2)),L-10,yy);
+  }
+  // Choose tick frequency for the currently available width; reserve the last index explicitly.
+  const usable=R-L,maxTickCount=Math.max(3,Math.floor(usable/43));
+  const niceSteps=[1,2,5,10,20,25,50,100];
+  const rawStep=(length-1)/(maxTickCount-1);
+  const xstep=niceSteps.find(v=>v>=rawStep)||Math.ceil(rawStep/100)*100;
+  c.textAlign='center';c.textBaseline='top';c.fillStyle='#657b92';
+  const ticks=[];for(let i=0;i<length;i+=xstep)ticks.push(i);
+  if(ticks[ticks.length-1]!==length-1)ticks.push(length-1);
+  for(let i=0;i<ticks.length;i++){
+    let k=ticks[i];const prev=ticks[i-1],next=ticks[i+1];
+    if(i>0&&i<ticks.length-1&&next===length-1&&px(next)-px(k)<28)continue;
+    if(i>0&&px(k)-px(prev)<24)continue;
+    c.fillText(String(k),px(k),B+9);
+  }
+  // Axis names are drawn on separate lines, never over the last tick number.
+  c.save();c.fillStyle='#334f6a';c.font='600 12px Arial, sans-serif';
+  c.textAlign='center';c.textBaseline='middle';
+  c.fillText(opts.xLabel||'Sample index (n)',(L+R)/2,h-15);
+  c.translate(17,(T+B)/2);c.rotate(-Math.PI/2);
+  c.fillText(opts.yLabel||'Amplitude',0,0);c.restore();
+  if(min<=0&&max>=0){c.lineWidth=1.2;c.strokeStyle='#aabacd';c.beginPath();c.moveTo(L,py(0));c.lineTo(R,py(0));c.stroke()}
+  for(const ss of series){
+    c.save(); c.globalAlpha=ss.alpha===undefined?1:ss.alpha;
+    if(ss.dashed)c.setLineDash([4,5]);
+    c.strokeStyle=ss.color;c.fillStyle=ss.color;c.lineWidth=ss.width||2.3;c.lineJoin='round';c.lineCap='round';
+    if(ss.mode==='stem'){
+      c.lineWidth=length>45?2:3;
+      ss.data.forEach((v,n)=>{if(v===null||!Number.isFinite(v)||Math.abs(v)<1e-11)return;
+        const xx=px(n),yy=py(v);c.beginPath();c.moveTo(xx,py(0));c.lineTo(xx,yy);c.stroke();c.beginPath();c.arc(xx,yy,length>45?2.2:3.1,0,Math.PI*2);c.fill()});
+    }else{c.beginPath();let started=false;ss.data.forEach((v,n)=>{if(v===null||!Number.isFinite(v)){started=false;return}const xx=px(n),yy=py(v);if(!started){c.moveTo(xx,yy);started=true}else c.lineTo(xx,yy)});c.stroke()}
+    c.restore();
+  }
+  if(opts.threshold!==undefined){const yy=py(opts.threshold);c.save();c.strokeStyle='#d8973b';c.setLineDash([5,5]);c.lineWidth=1.2;c.beginPath();c.moveTo(L,yy);c.lineTo(R,yy);c.stroke();c.fillStyle='#b5782d';c.font='11px Arial';c.textAlign='right';c.fillText('threshold',R-4,yy-10);c.restore()}
+  if(Number.isInteger(opts.releasedIndex) && opts.releasedIndex>=0 && opts.releasedIndex<length){
+    const r=opts.releasedIndex, v=series[0].data[r];
+    if(v!==null&&Number.isFinite(v)){
+      c.save();c.strokeStyle='#df8737';c.lineWidth=1.6;c.setLineDash([2,4]);
+      c.beginPath();c.moveTo(px(r),T);c.lineTo(px(r),B);c.stroke();c.setLineDash([]);
+      c.beginPath();c.arc(px(r),py(v),5.4,0,Math.PI*2);c.fillStyle='#df8737';c.fill();
+      c.lineWidth=1.7;c.strokeStyle='#fff';c.stroke();c.restore();
+    }
+  }
+  if(Number.isInteger(opts.current)&&opts.current>=0&&opts.current<length){const xx=px(opts.current);c.save();c.strokeStyle='#0a987c';c.globalAlpha=.7;c.setLineDash([4,4]);c.lineWidth=1.6;c.beginPath();c.moveTo(xx,T);c.lineTo(xx,B);c.stroke();c.restore();for(const ss of series){const v=ss.data[opts.current];if(v!==null&&Number.isFinite(v)){c.fillStyle=ss.color;c.beginPath();c.arc(xx,py(v),4.1,0,Math.PI*2);c.fill();c.strokeStyle='#fff';c.lineWidth=1;c.stroke()}}}
+ }
+ function plotThree(specs){for(let i=0;i<3;i++){let p=specs[i],id=i+1;setText('g'+id+'-title',p.title);setText('g'+id+'-note',p.note||'');$('plot'+id).setAttribute('aria-label',p.title);chart($('plot'+id),p.series,{...p.options,current:p.options&&p.options.current!==undefined?p.options.current:S.n})}}
+ function aiScoreAt(n,p){if(n<0)return null;let high=0,imax=-1;for(let i=0;i<=n;i++)if(p[i]!==null&&p[i]>high){high=p[i];imax=i}return{max:high,imax}}
+ function renderImpulse(){let h=impulseFilter(),delta=Array.from({length:N},(_,n)=>n===0?1:0),xx=makeSignal('double',0),out=conv(xx,h);
+  $('ma-control-label').classList.toggle('u-hidden',S.filter!=='ma');$('ma-length').classList.toggle('u-hidden',S.filter!=='ma');$('ma-limits').classList.toggle('u-hidden',S.filter!=='ma');$('alpha-control').classList.toggle('u-hidden',S.filter!=='exp');
+  setText('filter-stat',S.filter==='exp'?'IIR':'FIR');setText('memory-stat',S.filter==='ma'?S.ma+' samples':S.filter==='exp'?'Decay aⁿ':'25 taps');
+  $('impulse-hint').innerHTML=S.filter==='ma'?`<strong>Impulse test</strong><br>길이 ${S.ma} 이동평균은 h[n] = 1/${S.ma} (0 ≤ n &lt; ${S.ma})입니다. 충격이 ${S.ma}개 샘플에 나뉘어 나타납니다.`:S.filter==='exp'?`<strong>Memory effect</strong><br>h[n] = (1−a)a<sup>n</sup>u[n]입니다. a가 1에 가까울수록 과거 충격의 영향이 천천히 사라집니다.`:`<strong>AI-weighted FIR</strong><br>학습형 필터의 계수를 임펄스 응답으로 표시합니다. 먼저 Part 02에서 Train AI를 실행해 보세요.`;
+  plotThree([{title:'Unit-impulse input δ[n]',note:'n=0에서 크기 1',series:[{data:delta,color:COL.blue,mode:'stem'}],options:{yLabel:'Input δ[n]'}},
+  {title:'Impulse response h[n] = yδ[n]',note:'시스템 고유 응답',series:[{data:h,color:COL.orange,mode:'stem'}],options:{yLabel:'Impulse h[n]'}},
+  {title:'Double Tap → Filtered output',note:'Gray x[n] · Blue y[n] = x*h',series:[{data:xx,color:COL.gray,width:1.6},{data:out,color:COL.blue,width:2.4}],options:{yLabel:'Signal amplitude'}}]);
+  setMetric(['Current index','h[n]','Filtered y[n]'],['n = '+S.n,fmt(h[S.n]),fmt(out[S.n])]);
+  setText('insight-head','Physical meaning · 입력이 같아도 h[n]이 다르면 출력이 달라집니다.');
+  $('insight-formula').innerHTML=S.filter==='ma'?`h[n] = 1/${S.ma} for 0 ≤ n &lt; ${S.ma}`:S.filter==='exp'?'h[n] = (1−a)aⁿu[n]':'h[n] = w[n] · learned FIR coefficients';
+  setText('insight-body','임펄스 응답은 LTI 시스템의 입력-출력 관계를 완전히 표현합니다. 두 번의 충격에 대한 전체 응답은 각각의 임펄스 응답이 이동하고 중첩된 결과입니다.');}
+
+ function datasetTypeLabel(t){return {double:'Double Tap',singleearly:'Single Tap · early',singlelate:'Single Tap · late',wrong:'Two taps · wrong interval',noise:'Noise Only'}[t]||t}
+ function renderDataset(){
+   const total=train.length, idx=clamp(S.datasetIndex,0,total-1);
+   const d=train[idx];if(!d)return;
+   const p=scoreVec(d.x), t=d.label, z=Math.log(Math.max(p,1e-12)/(1-Math.min(p,1-1e-12)));
+   const loss=-(t*Math.log(Math.max(p,1e-12))+(1-t)*Math.log(Math.max(1-p,1e-12)));
+   $('dataset-index').value=idx+1;
+   setText('dataset-index-out',String(idx+1).padStart(3,'0')+' / '+total);
+   setText('dataset-sample-type',datasetTypeLabel(d.type));
+   setText('dataset-wave-note',`Sample #${idx+1} · ${datasetTypeLabel(d.type)}`);
+   setText('dataset-truth',t===1?'1 · Double Tap':'0 · Other');
+   $('dataset-truth-bar').style.width=(t*100)+'%';
+   setText('dataset-pred',p.toFixed(3));$('dataset-pred-bar').style.width=(p*100).toFixed(2)+'%';
+   setText('dataset-bce',loss.toFixed(4));
+   let msg, good;
+   if(S.epoch===0){msg='학습 전: P=0.500 · 아직 구분 능력이 없습니다.';good=false}
+   else{const guess=p>=.5?1:0;good=(guess===t);msg= `AI 판정: ${guess===1?'Double Tap':'Other'} · ${good?'정답과 일치':'오분류'} (기준 0.50)`}
+   const result=$('dataset-classification');result.textContent=msg;result.classList.toggle('missed',!good);
+   setText('dataset-formula', `Sample #${idx+1} | t=${t}, P=${p.toFixed(4)}, z=${z.toFixed(4)} · BCE = ${t===1?'−ln(P)':'−ln(1−P)'} = ${loss.toFixed(4)}. 학습은 샘플별 오차의 기울기를 사용하여 25개 w[k]와 bias b를 갱신합니다 (SGD, 학습률 0.045).`);
+   // The dataset stores the FIR taps in reverse-chronological order (k=0 is newest).
+   // Reverse for the visualization so the chart runs from oldest m=0 to newest m=24.
+   chart($('dataset-wave'),[{data:d.x.slice().reverse(),color:COL.blue,mode:'stem'}],{length:M,current:null,xLabel:'Window sample (m)',yLabel:'Accel. x[m]'});
+ }
+
+ function renderAI(){let x=makeSignal(S.preset),p=aiTimeline(x),raw=aiRawTimeline(x),cur=aiScoreAt(S.n,p),max=cur.max,hit=max>=S.threshold;
+  const yes=S.preset==='double';let stateText=S.n<M-1?'Waiting for full window':hit?'Double Tap detected':'Not detected';
+  plotThree([{title:'Accelerometer signal x[n]',note:'두드리기 / 노이즈 파형',series:[{data:x,color:COL.blue,width:2.3}],options:{current:S.n,yLabel:'Acceleration x[n]'}},
+  {title:'Learned FIR coefficients w[k]',note:'k=0: 현재 · k가 커질수록 과거',series:[{data:S.w,color:COL.purple,mode:'stem'}],options:{length:M,current:null,xLabel:'Tap index (k)',yLabel:'Weight w[k]'}},
+  {title:'AI probability P(Double Tap | window)',note:'sigmoid(Σw[k]x[n−k]+b)',series:[{data:p,color:COL.green,width:2.7}],options:{threshold:S.threshold,yMin:0,yMax:1,current:S.n,yLabel:'P(Double Tap)'}}]);
+  setMetric(['Synthetic test accuracy*','Peak score up to n','AI detection'],[(testAccuracy()*100).toFixed(1)+'%',max.toFixed(3),stateText]);
+  $('m3-value').classList.add(hit?'good':'warn');setText('test-accuracy',(testAccuracy()*100).toFixed(1)+'%');setText('loss-out',fmt(S.loss));setText('epoch-out','Epoch '+S.epoch);$('training-progress').style.width=(S.trainProgress!==undefined?S.trainProgress:Math.min(100,S.epoch/40*100))+'%';
+  setText('insight-head','Physical meaning · AI도 신호에서 가중합을 계산합니다.');
+  $('insight-formula').textContent='z[n] = Σₖ₌₀²⁴ w[k]x[n−k] + b,   P[n] = σ(z[n])';
+  setText('insight-body',S.epoch===0?'학습 전에는 w[k]=0, b=0이므로 P=0.5입니다. Train AI로 필터가 Double Tap 패턴의 두 충격에 반응하도록 바뀌는지 확인하세요.':`${S.epoch}번의 epoch 학습 후, 계수와 bias가 패턴 분류에 맞게 변화했습니다. 이 값은 완성된 CNN이 아니라 교육용 단일 필터+sigmoid의 결과입니다. 현재 선택 시나리오: ${yes?'Double Tap':'Other'}.`);
+  renderDataset();
+  const detail=aiScoreDetail(x,S.n);
+  $('ai-chip-target').textContent='Target label: '+(yes?'Double Tap = 1':'Other = 0');
+  $('ai-chip-bias').textContent='Bias b = '+fmt(S.bias);
+  $('ai-chip-epoch').textContent='Epoch '+S.epoch;
+  setText('ai-mini-note1',`window aligned at n=${S.n}`);
+  setText('ai-mini-note2',`Σ contribution = ${fmt(detail.contrib.reduce((a,b)=>a+b,0))}`);
+  setText('ai-mini-note3',`z[${S.n}] = ${fmt(raw[S.n]??0)} before sigmoid`);
+  setText('ai-mini-note4',`latest loss = ${fmt(S.loss)}`);
+  chart($('ai-mini-window'),[{data:detail.win,color:COL.blue,mode:'stem'}],{length:M,current:null,xLabel:'Tap index (k)',yLabel:'x[n−k]'});
+  chart($('ai-mini-contrib'),[{data:detail.contrib,color:COL.orange,mode:'stem'}],{length:M,current:null,xLabel:'Tap index (k)',yLabel:'w[k]x[n−k]'});
+  chart($('ai-mini-score'),[{data:raw,color:COL.purple,width:2.4}],{current:S.n,xLabel:'Sample index (n)',yLabel:'Raw score z[n]'});
+  chart($('ai-mini-loss'),[{data:S.lossHist,color:COL.green,width:2.5}],{length:Math.max(S.lossHist.length,2),current:S.lossHist.length-1,xLabel:'Epoch',yLabel:'Loss L'});
+  $('ai-summary').innerHTML = S.epoch===0
+    ? '<strong>Before training</strong> · 모든 가중치가 0이므로 어떤 입력 창을 넣어도 raw score z[n] = 0입니다. 따라서 sigmoid 출력은 항상 0.5가 됩니다. 즉, 아직 Double Tap과 Other를 구분하지 못합니다.'
+    : `<strong>After training</strong> · 현재 n=${S.n}에서 window x[n−k]와 learned weight w[k]가 곱해져 raw score z[${S.n}] = ${fmt(detail.z)}를 만듭니다. sigmoid를 통과하면 P = ${fmt(detail.p)}가 됩니다. Loss history가 내려갈수록 training set의 오차가 줄어들고, 두 번의 충격 간격에 맞는 탭들의 가중치가 더 중요해집니다.`;
+ }
+ function renderGestureDemo(){
+  const now=S.gestureN,xSingle=makeSignal('single'),xDouble=makeSignal('double');
+  const chartFor=(id,data,col)=>{
+    const measured=data.map((v,i)=>i<=now?v:null),future=data.map((v,i)=>i>=now?v:null);
+    chart($(id),[{data:future,color:COL.gray,alpha:.22,dashed:true,width:1.5},{data:measured,color:col,width:2.6}],{current:now,futureAfter:now,yLabel:'Accel. x[n]',xLabel:'Sample index (n)'});
+  };
+  chartFor('gesture-single',xSingle,COL.blue);chartFor('gesture-double',xDouble,COL.orange);
+  setText('gesture-out','n = '+now);$('gesture-range').value=now;Q('[data-gesture-jump]').forEach(b=>{const active=Number(b.dataset.gestureJump)===now;b.classList.toggle('primary',active);b.setAttribute('aria-pressed',String(active))});
+  const ready=now>=22,st=$('gesture-status');st.classList.toggle('ready',ready);
+  st.innerHTML=ready
+   ?`<b>n=${now}: 두 번째 충격이 도착했습니다.</b> Double Tap 신호에는 n=22부터 추가 충격이 있어 두 경우를 구별할 수 있습니다. 그러나 n<22 시점으로 돌아가면 두 입력은 관측상 같습니다.`
+   :`<b>n=${now}: 현재까지는 두 신호가 동일합니다.</b> Single Tap인지 Double Tap인지 확정할 정보가 없습니다. 미래 n=22의 충격은 아직 측정되지 않았습니다. 회색은 강의용 오프라인 미리보기입니다.`;
+ }
+ function renderBiboDemo(){
+   const x=Array.from({length:N},()=>.1),acc=[],leaky=[];let u=0,v=0;
+   for(let i=0;i<N;i++){u=u+x[i];v=.8*v+x[i];acc.push(u);leaky.push(v)}
+   chart($('bias-plot'),[{data:acc,color:COL.blue,width:2.7},{data:leaky,color:COL.green,width:2.7}],{xLabel:'Sample index (n)',yLabel:'Output y[n]'});
+   const now=S.convN, ks=Array.from({length:Math.max(2,now+1)},(_,k)=>k<=now?k:null),xk=ks.map(k=>k===null?null:(k%2===0?1:-1)),hk=ks.map(k=>k===null?null:((now-k)%2===0?1:-1)),product=ks.map(k=>k===null?null:((now%2===0)?1:-1));
+   chart($('conv-input'),[{data:xk,color:COL.blue,mode:'stem'}],{length:ks.length,current:null,xLabel:'Convolution index (k)',yLabel:'x[k]'});
+   chart($('conv-kernel'),[{data:hk,color:COL.orange,mode:'stem'}],{length:ks.length,current:null,xLabel:'Convolution index (k)',yLabel:'h[n−k]'});
+   chart($('conv-product'),[{data:product,color:COL.green,mode:'stem'}],{length:ks.length,current:null,xLabel:'Convolution index (k)',yLabel:'Product'});
+   setText('conv-out','n = '+now);$('conv-range').value=now;
+   const out=(now+1)*(now%2===0?1:-1);
+   $('conv-explain').textContent=`n=${now}: x[k]와 h[n−k]의 곱 ${now+1}개가 모두 ${out>0?'+1':'−1'}입니다. y[${now}]=${now+1}×(${out>0?'+1':'−1'})=${out}. |y[n]|=n+1로 계속 증가합니다.`;
+ }
+ function renderCausal(){
+  renderGestureDemo();
+  const x=makeSignal(S.preset), yc=smoothCausal(x), yn=smoothCentered(x), n=S.n, released=n-2;
+  // Actual signal values become available only through time n.  The faint trace
+  // beyond n is a teacher's off-line reference, not accessible sensor data.
+  const measured=x.map((v,i)=>i<=n?v:null),future=x.map((v,i)=>i>=n?v:null);
+  const observedC=yc.map((v,i)=>i<=n?v:null);
+  const observedNC=yn.map((v,i)=>i<=released?v:null);
+  const windows=[{from:Math.max(0,n-4),to:n,color:'rgba(39,118,187,.14)'},
+                 {from:n+1,to:Math.min(N-1,n+2),color:'rgba(223,135,55,.21)'}];
+  plotThree([
+   {title:'Sensor signal x[n] · what has arrived?',note:`Measured through n=${n} · faded future is offline preview`,
+    series:[{data:future,color:COL.gray,width:1.8,alpha:.28,dashed:true},{data:measured,color:COL.blue,width:2.6}],
+    options:{windows,futureAfter:n,yLabel:'Acceleration x[n]'}},
+   {title:'Causal moving average y_c[m]',note:`Real-time output is available through m=${n}`,
+    series:[{data:observedC,color:COL.blue,width:2.7},{data:measured,color:COL.gray,width:1.1,alpha:.65}],
+    options:{futureAfter:n,xLabel:'Output sample index (m)',yLabel:'Causal y_c[m]'}},
+   {title:'Centered moving average y_nc[m]',note:released>=0?`Latest released output: m=${released} (2-sample wait)`:'No centered output available yet · 2-sample wait',
+    series:[{data:observedNC,color:COL.orange,width:2.8},{data:measured,color:COL.gray,width:1.1,alpha:.55}],
+    options:{futureAfter:released,xLabel:'Output sample index (m)',yLabel:'Centered y_nc[m]',releasedIndex:released}}]);
+  const centeredText=released>=0&&yn[released]!==null?`y_nc[${released}] = ${fmt(yn[released])}`:'Not ready yet';
+  setMetric(['Latest sensor sample','Causal output at current n','Latest available centered output'],
+            ['n = '+n,`y_c[${n}] = ${fmt(yc[n])}`,centeredText]);
+  const demo=$('causal-status'),isReady=n>=11;
+  const x11=fmt(x[11]), computed=fmt(yn[9]);
+  demo.classList.toggle('ready',isReady);
+  if(!isReady){
+    demo.innerHTML=`<strong>n = ${n}: y<sub>nc</sub>[9] is PENDING</strong> — x[11]이 필요합니다. 현재 n=${n}까지 측정되었으므로, x[11]은 아직 사용할 수 없습니다. <strong>n=11</strong> 버튼을 누르세요.`;
+  } else {
+    demo.innerHTML=`<strong>n = ${n}: y<sub>nc</sub>[9] AVAILABLE</strong> — 이제 x[11] = ${x11}까지 측정되었고, y<sub>nc</sub>[9] = ${computed}을 계산할 수 있습니다. 출력의 인덱스는 <strong>9</strong>지만 실제 계산 가능 시점은 <strong>11</strong>입니다.`;
+  }
+  setText('insight-head','Physical meaning · centered 결과는 예측이 아니라, 늦게 도착한 정보로 계산된 결과입니다.');
+  $('insight-formula').textContent='y_c[m] = (1/5) Σₖ₌₀⁴ x[m−k]     y_nc[m] = (1/5) Σₖ₌₋₂² x[m−k]';
+  setText('insight-body',released>=0?
+   `센서 측정은 n=${n}까지 완료되었습니다. y_c[${n}]은 즉시 계산되지만, centered 이동평균에서 지금 막 계산 가능한 것은 y_nc[${released}]입니다. y_nc[${n}]은 x[${n+1}], x[${n+2}]가 도착해야 계산됩니다. 화면에서 오른쪽의 회색 미래 신호는 교육용 미리보기입니다.`:
+   `센서 측정은 n=${n}까지 완료되었습니다. Centered 이동평균은 미래 2샘플이 있어야 하므로 아직 출력이 준비되지 않았습니다. 오른쪽의 회색 신호는 교육용 오프라인 미리보기이며, 실시간 시스템은 해당 값을 모릅니다.`);
+ }
+
+ function renderStable(){renderBiboDemo();let d=stabilityData(),ok=Math.abs(S.a)<1-1e-8,sum=ok?(1/(1-Math.abs(S.a))).toFixed(2):'∞',n=S.n;
+  plotThree([{title:'Bounded input x[n]',note:S.stabInput==='step'?'Unit step input':'Alternating ±1 input',series:[{data:d.x,color:COL.blue,mode:'stem'}],options:{yLabel:'Input x[n]'}},
+   {title:'Impulse response h[n] = aⁿu[n]',note:ok?'Absolute summability holds':'Impulse response not absolutely summable',series:[{data:d.h,color:COL.orange,mode:'stem'}],options:{yLabel:'Impulse h[n]'}},
+   {title:'System output y[n]',note:'y[n] = a y[n−1] + x[n]',series:[{data:d.y,color:ok?COL.green:COL.purple,width:2.7}],options:{yLabel:'Output y[n]'}}]);
+  setText('stable-status',ok?'STABLE':'UNSTABLE');$('stable-status').style.color=ok?'#088e72':'#c66b3c';setText('abs-sum',sum);
+  setMetric(['System status','y[n] at current n','Impulse h[n]'],[ok?'BIBO STABLE':'NOT BIBO',fmt(d.y[n]),fmt(d.h[n])]);
+  setText('insight-head','Physical meaning · 입력과 h[n]이 각각 bounded여도 출력은 발산할 수 있습니다.');$('insight-formula').textContent='h[n] = aⁿu[n]   ·   Σₙ₌₀∞ |h[n]| < ∞ ⇔ |a| < 1';
+  setText('insight-body',!ok&&Math.abs(S.a+1)<.001&&S.stabInput==='step'?'a=−1에서 계단 입력에 대한 출력은 0과 1 사이로 제한되지만, 교대 입력 x[n]=(−1)ⁿ에서는 x[k]h[n−k]의 부호가 모두 일치해 y[n]=(n+1)(−1)ⁿ로 발산합니다.':ok?'|a| < 1이므로 절대합이 유한합니다. 따라서 모든 유계 입력에 대해 출력도 유계로 유지됩니다.':'|a| ≥ 1이면 ∑|h[n]|이 발산합니다. h[n] 자체가 유계일 수는 있지만 모든 bounded 입력에 대해 출력이 bounded인 것은 아닙니다.');}
+ function settings(){const t=S.tab,info={impulse:['Impulse Response Explorer','δ[n]을 입력하고 출력이 h[n]이 되는지 확인하세요.','3.7 IMPULSE RESPONSE','필터 계수를 바꾸어 응답의 길이와 모양 비교'],ai:['Train Your Tiny AI Filter','가상의 센서 데이터에 대해 학습되는 FIR 계수와 검출 출력을 관찰합니다.','3.7 CONVOLUTION + AI','학습 전후의 결과를 비교하세요.'],causal:['Causality · Can AI See the Future?','Double Tap과 Single Tap이 언제 구별 가능한지 확인하고, 두 이동평균 필터의 시간 지연을 비교합니다.','3.8 CAUSALITY','미래 샘플을 쓰려면 어떤 대가가 필요한가?'],stable:['BIBO Stability · Input and Memory','작은 센서 Bias 누적과 a=−1에서 Convolution 항의 누적을 확인합니다.','3.9 STABILITY','계단 입력 하나로 안정성을 판단할 수 있을까?']}[t];
+ ['view-title','view-subtitle','view-tag','sidebar-sub'].forEach((id,i)=>setText(id,info[i]));
+ const exercises={impulse:['한 번의 충격이 왜 여러 샘플에 나타날까?','이동평균 길이를 4에서 8로 늘리면 한 번의 충격의 높이와 지속 시간은 어떻게 달라질까요?','각 샘플의 높이는 1/4에서 1/8로 감소하고, 길이는 4에서 8로 증가합니다. 시간축에 분산되어 퍼지는 대신 합은 1로 동일합니다.','3.7 Impulse Response','h[n]은 LTI 시스템을 완전히 기술합니다. 피드백 유무에 따라 FIR 또는 IIR 형태로 나타날 수 있습니다.'],
+ ai:['AI는 무엇을 실제로 학습할까?','Train AI를 실행한 뒤 FIR 가중치 w[k]와 AI score가 어떻게 달라지는지 확인하세요. Single Tap과 Noise Only를 선택하면 어떻게 될까요?','가중치는 두 번 충격 패턴에 유리한 시간 지연에 반응하도록 조절됩니다. Single Tap에서는 하나의 충격만 있으므로 두 번 충격의 점수가 상대적으로 작아집니다.','3.7 Convolution and Pattern Detection','LTI인 학습형 FIR 선형부의 임펄스 응답은 w[k]입니다. 하지만 bias·sigmoid·판정으로 이루어진 전체 분류기는 LTI가 아닙니다.'],
+ causal:['두 번째 충격이 오기 전에 Double Tap임을 알 수 있을까?','Gesture Experiment에서 n=16과 n=23을 비교하세요. 그 후 n=9, n=11 버튼을 이용하여 Centered Moving Average가 언제 계산되는지 확인하세요.','n<22에서 Single/Double Tap 입력은 동일합니다. 이때는 현재까지의 데이터만으로 구별할 수 없습니다. Centered Moving Average의 y_nc[9]는 x[11]이 도착한 뒤에 계산됩니다.','3.8 Causality','오프라인에서 과거의 출력 인덱스에 미래 데이터로 값을 붙일 수는 있지만 미래를 미리 측정한 것은 아닙니다. 인과적 DTLTI의 조건은 k<0에서 h[k]=0입니다.'],
+ stable:['입력과 h[n]이 유계인데 출력은 왜 발산할까?','Experiment A에서 x[n]=0.1을 누적하는 경우와 leaky 필터를 비교하세요. Experiment B에서는 a=−1의 곱 x[k]h[n−k]가 왜 같은 부호가 되는지 관찰하세요.','a=1은 작은 Bias가 계속 누적됩니다. a=−1에서 alternating ±1 입력은 x[k]h[n−k]=(−1)ⁿ이 되어 모두 같은 부호로 더해지고, y[n]=(n+1)(−1)ⁿ로 발산합니다.','3.9 BIBO Stability','h[n]이 bounded인 것만으로는 충분하지 않습니다. DTLTI의 BIBO 안정성은 Σ|h[n]|<∞와 동치입니다.']}[t];
+ setText('challenge-title',exercises[0]);setText('challenge-q',exercises[1]);setText('challenge-answer',exercises[2]);setText('lecture-title',exercises[3]);setText('lecture-text',exercises[4]);$('answer').open=false;}
+ function render(){Q('.tab').forEach(el=>{const a=el.dataset.tab===S.tab;el.classList.toggle('active',a);el.setAttribute('aria-pressed',String(a))});Q('.control-set').forEach(el=>el.classList.toggle('active',el.id==='control-'+S.tab));$('ai-demo').hidden=S.tab!=='ai';$('ai-usecase').hidden=S.tab!=='ai';$('training-dataset').hidden=S.tab!=='ai';$('ai-result-heading').hidden=S.tab!=='ai';$('bridge-impulse').hidden=S.tab!=='impulse';$('bridge-ai').hidden=S.tab!=='ai';$('causal-demo').hidden=S.tab!=='causal';$('gesture-demo').hidden=S.tab!=='causal';$('bibo-demo').hidden=S.tab!=='stable';
+ Q('#ai-presets .seg,#causal-presets .seg').forEach(el=>el.classList.toggle('active',el.dataset.preset===S.preset));Q('#stable-inputs .seg').forEach(el=>el.classList.toggle('active',el.dataset.stableInput===S.stabInput));
+ setText('ma-out',''+S.ma);setText('alpha-out',S.alpha.toFixed(2));setText('noise-out',S.noise.toFixed(2));setText('threshold-out',S.threshold.toFixed(2));setText('a-out',S.a.toFixed(2));setText('n-out','n = '+S.n);$('n-range').value=S.n;
+ if(S.tab==='impulse')renderImpulse();if(S.tab==='ai')renderAI();if(S.tab==='causal')renderCausal();if(S.tab==='stable')renderStable();}
+ function pause(){S.playing=false;if(playTimer!==null){clearInterval(playTimer);playTimer=null}setText('play-btn','▶ Play')}
+ function changeTab(t){pause();S.tab=t;if(t==='impulse')S.n=1;else if(t==='ai')S.n=34;else if(t==='causal'){S.n=9;S.gestureN=16}else {S.n=15;S.convN=4}settings();render()}
+ function tick(){if(S.n>=N-1){pause();return}S.n++;render()}
+ function play(){if(S.playing){pause();return}if(S.n>=N-1)S.n=0;S.playing=true;setText('play-btn','Ⅱ Pause');playTimer=setInterval(tick,100)}
+ Q('.tab').forEach(b=>b.addEventListener('click',()=>changeTab(b.dataset.tab)));
+ $('filter-type').addEventListener('change',e=>{S.filter=e.target.value;render()});$('ma-length').addEventListener('input',e=>{S.ma=+e.target.value;render()});$('alpha').addEventListener('input',e=>{S.alpha=+e.target.value;render()});
+ for(let id of ['ai-presets','causal-presets'])Q('#'+id+' button').forEach(b=>b.addEventListener('click',()=>{S.preset=b.dataset.preset;S.n=S.tab==='ai'?34:9;pause();render()}));
+ $('noise').addEventListener('input',e=>{S.noise=+e.target.value;render()});$('threshold').addEventListener('input',e=>{S.threshold=+e.target.value;render()});
+
+ $('dataset-index').addEventListener('input',e=>{S.datasetIndex=+e.target.value-1;render()});
+ $('dataset-prev').addEventListener('click',()=>{S.datasetIndex=(S.datasetIndex+train.length-1)%train.length;render()});
+ $('dataset-next').addEventListener('click',()=>{S.datasetIndex=(S.datasetIndex+1)%train.length;render()});
+ Q('[data-dataset-type]').forEach(b=>b.addEventListener('click',()=>{
+   const type=b.dataset.datasetType, start=(S.datasetIndex+1)%train.length;
+   for(let j=0;j<train.length;j++){const i=(start+j)%train.length;if(train[i].type===type){S.datasetIndex=i;break}}
+   render();
+ }));
+ $('train-btn').addEventListener('click',trainingBatch);$('epoch-btn').addEventListener('click',()=>{trainEpoch();render()});$('train-reset').addEventListener('click',resetTraining);
+ $('ai-train-inline').addEventListener('click',trainingBatch);$('ai-epoch-inline').addEventListener('click',()=>{if(!S.trainLock){trainEpoch();render()}});
+ Q('[data-go-tab]').forEach(b=>b.addEventListener('click',()=>{changeTab(b.dataset.goTab);$('live').scrollIntoView({behavior:'smooth',block:'start'})}));
+ $('a-range').addEventListener('input',e=>{S.a=+e.target.value;render()});Q('[data-a]').forEach(b=>b.addEventListener('click',()=>{S.a=+b.dataset.a;$('a-range').value=S.a;render()}));Q('[data-stable-input]').forEach(b=>b.addEventListener('click',()=>{S.stabInput=b.dataset.stableInput;render()}));
+ Q('[data-causal-jump]').forEach(b=>b.addEventListener('click',()=>{pause();S.preset='double';S.n=+b.dataset.causalJump;render()}));
+ $('causal-play-demo').addEventListener('click',()=>{pause();S.preset='double';S.n=7;render();S.playing=true;setText('play-btn','Ⅱ Pause');playTimer=setInterval(()=>{if(S.n>=13){pause();return}S.n++;render()},650)});
+ Q('[data-gesture-jump]').forEach(b=>b.addEventListener('click',()=>{pause();S.gestureN=+b.dataset.gestureJump;render()}));
+ $('gesture-range').addEventListener('input',e=>{pause();S.gestureN=+e.target.value;render()});
+ $('gesture-replay').addEventListener('click',()=>{pause();S.gestureN=16;render();S.playing=true;playTimer=setInterval(()=>{if(S.gestureN>=25){pause();return}S.gestureN++;render()},480)});
+ $('conv-range').addEventListener('input',e=>{pause();S.convN=+e.target.value;render()});
+ $('n-range').addEventListener('input' ,e=>{pause();S.n=+e.target.value;render()});$('back-btn').addEventListener('click',()=>{pause();S.n=clamp(S.n-1,0,N-1);render()});$('forward-btn').addEventListener('click',()=>{pause();S.n=clamp(S.n+1,0,N-1);render()});$('play-btn').addEventListener('click',play);$('restart-btn').addEventListener('click',()=>{pause();S.n=0;render()});
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)pause()});let resizeTimer=null;window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(render,100)});
+ buildDataset();settings();render();
+})();
+</script>
+</body>
+</html>

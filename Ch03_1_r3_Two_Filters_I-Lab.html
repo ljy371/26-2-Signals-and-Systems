@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="author" content="Kwanghyun Cho, Pusan National University">
+  <meta name="copyright" content="© 2026 Kwanghyun Cho, Pusan National University. All rights reserved.">
+  <title>Moving Average &amp; Exponential Smoother — Interactive Signal Lab</title>
+  <style>
+    :root { --page:#f3f6fb; --card:#ffffff; --ink:#17253e; --muted:#64748b; --line:#e4eaf3; --soft:#f7f9fc; --grid:#e9eef5; --navy:#101d36; --shadow:0 17px 43px rgba(29,51,92,.075); }
+    :root[data-theme="dark"] { --page:#101727; --card:#182339; --ink:#f3f7ff; --muted:#a8b5cb; --line:#34415a; --soft:#202d46; --grid:#34415a; --navy:#0b1222; --shadow:0 17px 43px rgba(0,0,0,.22); color-scheme:dark; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { margin:0; font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif; background:var(--page);color:var(--ink);font-size:15px; line-height:1.62; }
+    button,input { font:inherit; }
+    button { cursor:pointer; }
+    .wrap { width:min(1350px,calc(100% - 52px)); margin:auto; }
+    .topbar { background:var(--navy); color:#dbe6fb; border-bottom:1px solid rgba(255,255,255,.13); }
+    .nav { min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px; }
+    .brand { display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;letter-spacing:.035em;font-size:14px; }
+    .brand-icon { display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#6de4c3;color:#092a2d;font-size:17px; }
+    .nav-links { display:flex;align-items:center;gap:17px; }
+    .nav-links a { font-size:12px; text-decoration:none; color:#cad6e8; }
+    .nav-links a:hover { color:#fff; }
+    .theme-toggle { color:#f0f6ff;border:1px solid #50607b;background:transparent; border-radius:9px; padding:6px 11px;font-size:12px; }
+    .hero { background:radial-gradient(ellipse at 83% 15%,rgba(105,219,188,.23),transparent 36%),radial-gradient(ellipse at 0 100%,rgba(118,141,231,.28),transparent 38%),linear-gradient(125deg,#121f3b,#192b4d);color:white; overflow:hidden; }
+    .hero-inner { padding:53px 0 56px;display:grid;grid-template-columns:1.5fr .85fr;gap:50px;align-items:center; }
+    .eyebrow { display:inline-flex;align-items:center;gap:9px;padding:6px 12px;border:1px solid rgba(185,230,222,.4);color:#b1f8e2;background:rgba(122,232,211,.07);font-size:11px;font-weight:800;letter-spacing:.16em;border-radius:100px;text-transform:uppercase; }
+    h1 {font-size:clamp(31px,3.4vw,49px);letter-spacing:-.055em;line-height:1.23; margin:20px 0 16px; font-weight:850; }
+    .hero p {color:#d2dded;font-size:15px;max-width:610px;margin:0; }
+    .hero strong {color:#b9f7e8;}
+    .summary-puzzle { border:1px solid rgba(228,238,255,.2); border-radius:21px; padding:20px 22px;background:rgba(255,255,255,.07); backdrop-filter:blur(8px); }
+    .puzzle-head {text-transform:uppercase;letter-spacing:.13em;font-weight:850;font-size:11px;color:#a8c4de;margin-bottom:11px;}
+    .puzzle-row {display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.12);font-size:13px; }
+    .puzzle-row:last-child{border:0;}
+    .puzzle-dot {border-radius:50%;height:9px;width:9px;flex-shrink:0;}
+    .puzzle-row span:last-child {margin-left:auto;color:#c4d0e1;font-size:11px;}
+    .workspace {padding:31px 0 65px;}
+    .section-top {display:flex;align-items:end;justify-content:space-between;gap:18px;margin-bottom:18px; }
+    .section-top h2 {font-size:25px;margin:0 0 4px;letter-spacing:-.045em;}
+    .section-top p {color:var(--muted);margin:0;font-size:13px;}
+    .notice {display:flex;align-items:center;gap:9px;padding:11px 14px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:22px;flex-wrap:wrap;}
+    .notice-title {font-size:12px;font-weight:800;margin-right:5px;white-space:nowrap;}
+    .mode-buttons {display:flex;flex-wrap:wrap;gap:7px;}
+    .mode-buttons button,.presets button {border:1px solid var(--line);color:var(--muted);background:var(--soft);font-weight:750;border-radius:8px;font-size:12px;padding:7px 10px;transition:.15s;}
+    .mode-buttons button.active {background:#183555;border-color:#183555;color:white;}
+    .mode-buttons button:hover,.presets button:hover {transform:translateY(-1px);}
+    .notice-hint {font-size:12px;color:var(--muted);margin-left:auto;}
+    .cards {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:19px;align-items:stretch;}
+    .lesson-card {--accent:#2088bd;--accent-light:rgba(32,136,189,.08);min-width:0;border:1px solid var(--line);border-radius:20px;background:var(--card); box-shadow:var(--shadow);overflow:hidden;scroll-margin-top:18px;display:flex; flex-direction:column;}
+    .ma {--accent:#138eaa;--accent-light:rgba(19,142,170,.075);}
+    .exp {--accent:#9264d0;--accent-light:rgba(146,100,208,.08);}
+    .card-inner {padding:24px 26px 20px;display:flex; flex-direction:column; flex:1;}
+    .card-top {display:flex;align-items:center;gap:12px;}
+    .num {display:grid;place-items:center;height:40px;width:40px;border-radius:12px;color:var(--accent);background:var(--accent-light);font-size:16px;font-weight:900;}
+    .card-name {flex:1;min-width:0;}
+    .card-name h3 {font-size:20px;line-height:1.25;margin:0;letter-spacing:-.04em;}
+    .card-name .subtitle {font-size:12px;color:var(--muted);margin-top:2px;}
+    .tagrow {display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+    .tag {font-size:10px;padding:4px 8px;font-weight:800;border-radius:100px;background:var(--accent-light);color:var(--accent);white-space:nowrap;}
+    .card-intro {margin:15px 0 0; font-size:13px;color:var(--muted);min-height:43px;}
+    .equation {display:flex;align-items:center;justify-content:center;min-height:70px;margin-top:14px;border-radius:11px;background:var(--soft);font-family:Georgia,"Times New Roman",serif;font-size:clamp(18px,1.9vw,25px);letter-spacing:.01em;white-space:nowrap;color:var(--ink);padding:8px;}
+    /* MathML reliably places sum limits above/below ∑, with no overlapping offsets. */
+    .ma-equation {min-height:94px;}
+    .ma-equation math {font-size:1.04em;max-width:100%;}
+    .ma-equation math mo {color:inherit;}
+    .flowline {display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap; min-height:35px;margin:15px 0 10px;font-size:11px; font-weight:700;color:var(--muted);}
+    .flowline .node {padding:5px 9px;border:1px solid var(--line);border-radius:7px;background:var(--card);color:var(--ink);}
+    .flowline .node.strong {border-color:var(--accent);color:var(--accent);background:var(--accent-light);}
+    .flowline .arrow {color:var(--accent);font-weight:900;font-size:15px;}
+    .plot-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;margin:9px 0 7px;}
+    .plot-heading strong{font-size:12px;}
+    .legend {display:flex;flex-wrap:wrap;gap:11px;font-size:10px;color:var(--muted);}
+    .legend span {display:flex;align-items:center;gap:5px;}
+    .linekey {height:2px;width:15px;background:var(--accent);display:inline-block;}
+    .linekey.gray {background:#8998b1;}
+    .linekey.dashed {background:repeating-linear-gradient(to right,var(--accent) 0 5px, transparent 5px 8px);}
+    .plot {border:1px solid var(--line);border-radius:10px;background:var(--card);padding:5px 7px 3px;}
+    canvas {display:block; width:100%;height:205px;cursor:crosshair;touch-action:pan-y;}
+    .controls {margin-top:15px;border-top:1px solid var(--line);padding-top:13px;display:grid;gap:8px;}
+    .controlrow {display:grid;grid-template-columns:minmax(138px,1fr) minmax(140px,1.35fr) 65px;align-items:center;gap:10px;font-size:12px;}
+    .controlrow label{font-weight:750;color:var(--ink);}
+    .controlrow .value {text-align:right;color:var(--accent);font-weight:850;font-variant-numeric:tabular-nums;}
+    input[type=range] {width:100%;accent-color:var(--accent);cursor:pointer;}
+    .reading {background:var(--accent-light);padding:13px 14px;border-radius:11px;margin-top:13px;min-height:85px;}
+    .reading .reading-title {font-size:11px;font-weight:850;color:var(--accent);letter-spacing:.015em;margin-bottom:4px;}
+    .reading .reading-main {font-size:13px;color:var(--ink);font-weight:700;line-height:1.6;}
+    .reading .reading-sub {font-size:12px;color:var(--muted);margin-top:4px;}
+    .takeaway {border-left:3px solid var(--accent);padding-left:11px;margin:15px 0 0;font-size:12px;color:var(--muted);}
+    .takeaway b {color:var(--ink);}
+    .presets {display:flex;gap:7px;flex-wrap:wrap;margin-top:11px;align-items:center;}
+    .presets span {font-size:11px;color:var(--muted);font-weight:700;margin-right:3px;}
+    footer {text-align:center;color:var(--muted);font-size:11px;padding:28px 0 10px;}
+    :focus-visible {outline:3px solid #53b8de;outline-offset:3px;}
+    @media(max-width:1090px) { .hero-inner {grid-template-columns:1.5fr 1fr;gap:20px;} .cards {gap:13px;} .card-inner {padding:20px 19px;} .card-name h3{font-size:18px;} .tagrow{display:none;} .equation{font-size:19px;} }
+    @media(max-width:800px) { .hero-inner {grid-template-columns:1fr;gap:24px;padding:42px 0;} .summary-puzzle{max-width:600px;} .cards{grid-template-columns:1fr;} .card-intro{min-height:0;} .notice-hint{width:100%;margin-left:0;} }
+    @media(max-width:550px) { .wrap {width:min(100% - 24px,1350px);} .nav-links a{display:none;} .hero-inner{padding:34px 0;} .card-inner{padding:19px 15px;} .equation{font-size:16px;letter-spacing:-.02em;} .controlrow{grid-template-columns:1fr 1fr 65px;gap:6px;} .controlrow label{font-size:11px;} .section-top h2{font-size:21px;} .plot-heading{flex-wrap:wrap;} }
+    @media(prefers-reduced-motion:reduce) { html{scroll-behavior:auto;} button{transition:none!important;} }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <nav class="wrap nav" aria-label="주요 메뉴">
+      <a class="brand" href="#top"><span class="brand-icon">∿</span> SIGNALS &amp; SYSTEMS <span style="opacity:.6;font-weight:500">/ INTERACTIVE LAB</span></a>
+      <div class="nav-links"><a href="#examples">2가지 필터</a><button class="theme-toggle" id="themeBtn" type="button">☾ 다크 모드</button></div>
+    </nav>
+  </div>
+  <header class="hero" id="top"><div class="wrap hero-inner">
+    <div>
+      <span class="eyebrow">Chapter 3.3 · Difference Equations</span>
+      <h1>두 가지 필터로 이해하는<br><span style="color:#9ae9ce">차분방정식</span></h1>
+      <p>센서의 잡음을 줄이는 Moving-Average Filter와 이전 출력을 재사용하는 Exponential Smoother를 비교해 보세요. <strong>같은 입력을 넣고, 출력이 어떻게 달라지는지 직접 확인할 수 있습니다.</strong></p>
+    </div>
+    <div class="summary-puzzle" aria-label="두 필터의 차이">
+      <div class="puzzle-head">2 Filters / 1 Key Difference</div>
+      <div class="puzzle-row"><i class="puzzle-dot" style="background:#58cee2"></i>Moving Average <span>과거 입력 4개 · Feedforward</span></div>
+      <div class="puzzle-row"><i class="puzzle-dot" style="background:#b893eb"></i>Exponential Smoother <span>이전 출력 1개 · Feedback</span></div>
+    </div>
+  </div></header>
+  <main class="workspace wrap" id="examples">
+    <div class="section-top"><div><h2>01 — 02. 두 가지 필터 직접 실험하기</h2><p>입력 신호를 바꾸고, 그래프에서 샘플을 선택하여 계산 과정을 확인해 보세요.</p></div></div>
+    <div class="notice"><span class="notice-title">공통 입력 신호 바꾸기</span><div class="mode-buttons" role="group" aria-label="두 필터의 공통 입력 신호">
+      <button type="button" data-mode="noise" class="active" aria-pressed="true">📈 노이즈 센서</button>
+      <button type="button" data-mode="step" aria-pressed="false">⬆ 계단 입력</button>
+      <button type="button" data-mode="spike" aria-pressed="false">⚡ 순간 이상치</button>
+    </div><span class="notice-hint">두 필터에 같은 입력이 적용됩니다.</span></div>
+    <div class="cards">
+      <article class="lesson-card ma" id="moving-average"><div class="card-inner">
+        <div class="card-top"><div class="num">01</div><div class="card-name"><h3>Moving-Average Filter</h3><div class="subtitle">길이 4의 이동평균 필터 · 센서 노이즈 제거</div></div><div class="tagrow"><span class="tag">LINEAR</span><span class="tag">FEEDFORWARD</span></div></div>
+        <p class="card-intro">센서 측정값이 계속 흔들린다면? <b>최근 4개 입력의 평균</b>으로 순간적인 변화를 줄여 봅시다.</p>
+        <div class="equation ma-equation" aria-label="y n equals one fourth times the sum of x n minus k, k from zero to three">
+          <math display="block" xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow>
+              <mi>y</mi><mo>[</mo><mi>n</mi><mo>]</mo><mo>=</mo>
+              <mfrac><mn>1</mn><mn>4</mn></mfrac>
+              <munderover><mo movablelimits="false">∑</mo><mrow><mi>k</mi><mo>=</mo><mn>0</mn></mrow><mn>3</mn></munderover>
+              <mi>x</mi><mo>[</mo><mi>n</mi><mo>−</mo><mi>k</mi><mo>]</mo>
+            </mrow>
+          </math>
+        </div>
+        <div class="flowline"><span class="node">x[n], x[n−1], x[n−2], x[n−3]</span><span class="arrow">→</span><span class="node strong">평균 × ¼</span><span class="arrow">→</span><span class="node">y[n]</span></div>
+        <div class="plot-heading"><strong>입력과 출력 비교</strong><div class="legend"><span><i class="linekey gray"></i>입력 x[n]</span><span><i class="linekey"></i>출력 y[n]</span></div></div>
+        <div class="plot"><canvas id="maChart" role="img" aria-label="이동평균 필터 입력과 출력 그래프. 표본을 클릭하면 해당 계산을 확인합니다."></canvas></div>
+        <div class="controls"><div class="controlrow"><label for="maN">선택한 샘플 n</label><input id="maN" type="range" min="3" max="79" step="1" value="30"><output class="value" id="maNVal">30</output></div></div>
+        <div class="reading" aria-live="polite"><div class="reading-title">🔎 최근 4개 샘플의 평균</div><div class="reading-main" id="maCalc"></div><div class="reading-sub" id="maNote"></div></div>
+        <p class="takeaway"><b>생각해 볼 점:</b> 왜 갑자기 값이 튀어도 평균 출력은 덜 흔들릴까요? 단, 빠른 변화도 느리게 따라간다는 대가가 있습니다.</p>
+      </div></article>
+      <article class="lesson-card exp" id="exponential"><div class="card-inner">
+        <div class="card-top"><div class="num">02</div><div class="card-name"><h3>Exponential Smoother</h3><div class="subtitle">지수 평활화 · 이전 출력의 재사용</div></div><div class="tagrow"><span class="tag">LINEAR</span><span class="tag">FEEDBACK</span></div></div>
+        <p class="card-intro">모든 과거 측정값을 저장하지 않고도 부드러운 신호를 만들 수 있을까요? <b>직전 출력 하나</b>를 다시 사용합니다.</p>
+        <div class="equation" role="math" aria-label="y n equals one minus alpha times y n minus one plus alpha x n"><i>y</i>[<i>n</i>] = (1 − α)<i>y</i>[<i>n</i>−1] + α<i>x</i>[<i>n</i>]</div>
+        <div class="flowline"><span class="node">x[n] × α</span><span class="arrow">+</span><span class="node strong">y[n−1] × (1−α) ↻</span><span class="arrow">→</span><span class="node">y[n]</span></div>
+        <div class="plot-heading"><strong>α에 따른 반응 비교</strong><div class="legend"><span><i class="linekey gray"></i>입력 x[n]</span><span><i class="linekey"></i>출력 y[n]</span></div></div>
+        <div class="plot"><canvas id="expChart" role="img" aria-label="지수 평활화 입력과 출력 그래프. 표본을 클릭하면 해당 계산을 확인합니다."></canvas></div>
+        <div class="controls">
+          <div class="controlrow"><label for="alpha">현재 입력의 비중 α</label><input id="alpha" type="range" min="0.05" max="0.95" step="0.05" value="0.20"><output class="value" id="alphaVal">0.20</output></div>
+          <div class="controlrow"><label for="expN">선택한 샘플 n</label><input id="expN" type="range" min="1" max="79" step="1" value="30"><output class="value" id="expNVal">30</output></div>
+        </div>
+        <div class="reading" aria-live="polite"><div class="reading-title">🔎 이번 입력 vs. 지난 출력</div><div class="reading-main" id="expCalc"></div><div class="reading-sub" id="expNote"></div></div>
+        <p class="takeaway"><b>예측하기:</b> α를 0.05로 내리면? 노이즈는 줄지만 반응은 느려집니다. 0.95로 올리면 거의 입력을 그대로 따라갑니다.</p>
+      </div></article>
+
+    </div>
+    <footer aria-label="Copyright and course information">
+      <div>Signals &amp; Systems · Moving-Average Filter &amp; Exponential Smoother</div>
+      <div>© 2026 Kwanghyun Cho, Pusan National University. All rights reserved.</div>
+    </footer>
+  </main>
+<script>
+(() => {
+  'use strict';
+  const N = 80;
+  const $ = id => document.getElementById(id);
+  const state = {mode:'noise', maN:30, expN:30, alpha:0.20};
+  const charts = {};
+  const fmt = (n,d=2) => Number(n).toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const seriesColor = card => getComputedStyle(card).getPropertyValue('--accent').trim();
+  const seeds=[];
+  let seed=3212345;
+  function rand(){seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;}
+  for(let n=0;n<N;n++)seeds.push(rand()-.5);
+  function inputData(){return Array.from({length:N},(_,n)=>{
+    if(state.mode==='step')return n<18?0:1;
+    if(state.mode==='spike')return 1.35+.13*Math.sin(n*.18)+.28*seeds[n]+(n===26||n===47?2.5:0);
+    return 2.1+.013*n+.29*Math.sin(.19*n)+.9*seeds[n];
+  });}
+  function movingAverage(x){return x.map((_,n)=>{let s=0;for(let k=0;k<4;k++)s+=n-k>=0?x[n-k]:0;return s/4;});}
+  function smoother(x,a){let prev=0;return x.map(v=>(prev=(1-a)*prev+a*v));}
+  function plot(canvasId, series, opts={}){
+    const canvas=$(canvasId), card=canvas.closest('.lesson-card');
+    const rect=canvas.getBoundingClientRect(); if(rect.width<10)return;
+    const W=rect.width, H=rect.height, dpr=Math.min(window.devicePixelRatio||1,2);
+    canvas.width=Math.round(W*dpr);canvas.height=Math.round(H*dpr);
+    const c=canvas.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);
+    const css=getComputedStyle(document.documentElement);
+    const grid=css.getPropertyValue('--grid').trim(),muted=css.getPropertyValue('--muted').trim(), ink=css.getPropertyValue('--ink').trim();
+    const accent=seriesColor(card);
+    const pad={l:45,r:13,t:12,b:29},pw=W-pad.l-pad.r,ph=H-pad.t-pad.b;
+    const flattened=series.flatMap(s=>s.points.map(p=>p.y).filter(Number.isFinite));
+    let ymin=opts.ymin!==undefined?opts.ymin:Math.min(...flattened);
+    let ymax=opts.ymax!==undefined?opts.ymax:Math.max(...flattened);
+    if(!Number.isFinite(ymin)||!Number.isFinite(ymax)) {ymin=0;ymax=1;}
+    if(ymax-ymin<1e-9){ymax+=.5;ymin-=.5;}
+    else if(opts.ymin===undefined||opts.ymax===undefined){const range=ymax-ymin;if(opts.ymin===undefined)ymin-=range*.09;if(opts.ymax===undefined)ymax+=range*.10;}
+    const xmin=opts.xmin===undefined?0:opts.xmin,xmax=opts.xmax===undefined?N-1:opts.xmax;
+    const X=x=>pad.l+pw*(x-xmin)/(xmax-xmin),Y=y=>pad.t+ph*(ymax-y)/(ymax-ymin);
+    c.save();c.font='10px system-ui, sans-serif';c.textBaseline='middle';
+    for(let j=0;j<=4;j++){
+      const yy=pad.t+ph*j/4,val=ymax-(ymax-ymin)*j/4;
+      c.strokeStyle=grid;c.lineWidth=1;c.beginPath();c.moveTo(pad.l,yy);c.lineTo(W-pad.r,yy);c.stroke();
+      c.fillStyle=muted;c.textAlign='right';
+      const text=opts.units==='loan'?String(Math.round(val)):Math.abs(val)>=10?String(Math.round(val)):val.toFixed(1);
+      c.fillText(text,pad.l-7,yy);
+    }
+    c.strokeStyle=grid;c.beginPath();c.moveTo(pad.l,H-pad.b);c.lineTo(W-pad.r,H-pad.b);c.stroke();
+    c.fillStyle=muted;c.textAlign='center';
+    for(let j=0;j<=4;j++){
+      const xx=xmin+(xmax-xmin)*j/4;c.fillText(String(Math.round(xx)),X(xx),H-11);
+    }
+    if(ymin<0&&ymax>0){c.save();c.strokeStyle=muted;c.setLineDash([3,5]);c.globalAlpha=.58;c.beginPath();c.moveTo(pad.l,Y(0));c.lineTo(W-pad.r,Y(0));c.stroke();c.restore();}
+    for(const s of series){
+      c.save();c.strokeStyle=s.color==='accent'?accent:s.color;c.lineWidth=s.width||2;c.globalAlpha=s.opacity===undefined?1:s.opacity;
+      if(s.dashed)c.setLineDash([5,5]);c.lineJoin='round';c.lineCap='round';c.beginPath();let has=false;
+      for(const p of s.points){if(!Number.isFinite(p.y)||p.x<xmin||p.x>xmax){has=false;continue;}
+        if(!has)c.moveTo(X(p.x),Y(p.y));else c.lineTo(X(p.x),Y(p.y));has=true;
+      }
+      c.stroke();c.restore();
+    }
+    const sel=opts.selected;
+    if(Number.isFinite(sel)&&sel>=xmin&&sel<=xmax){
+      const xp=X(sel);
+      c.save();c.strokeStyle=accent;c.globalAlpha=.55;c.setLineDash([4,4]);c.lineWidth=1;c.beginPath();c.moveTo(xp,pad.t);c.lineTo(xp,H-pad.b);c.stroke();c.restore();
+      for(const s of series){if(s.color!=='accent'&& !s.primary)continue;
+        const p=s.points.find(v=>v.x===sel);if(p&&Number.isFinite(p.y)){
+          c.beginPath();c.arc(X(sel),Y(p.y),4.3,0,Math.PI*2);c.fillStyle=css.getPropertyValue('--card').trim();c.fill();c.lineWidth=2;c.strokeStyle=accent;c.stroke();
+        }
+      }
+    }
+    c.restore();
+    charts[canvasId]={xmin,xmax,pad,W};
+  }
+  function updateMA(x){
+    const y=movingAverage(x),n=state.maN, xs=[0,1,2,3].map(k=>n-k>=0?x[n-k]:0);
+    $('maNVal').textContent=n;
+    $('maCalc').textContent=`y[${n}] = (${xs.map(v=>fmt(v)).join(' + ')}) / 4 = ${fmt(y[n])}`;
+    $('maNote').textContent=state.mode==='step'?'입력이 갑자기 바뀌어도 최근 4개 샘플이 순서대로 반영됩니다.':state.mode==='spike'?'한 번의 이상치가 평균 출력에는 4개 시점에 걸쳐 영향을 줍니다.':'과거 입력 4개만 사용하며, 이전 출력값은 사용하지 않습니다.';
+    plot('maChart',[{points:x.map((v,n)=>({x:n,y:v})),color:'#92a2b9',width:1.5,opacity:.82},{points:y.map((v,n)=>({x:n,y:v})),color:'accent',width:2.8}],{selected:n});
+  }
+  function updateEXP(x){
+    const a=state.alpha,y=smoother(x,a),n=state.expN;
+    $('alphaVal').textContent=fmt(a);
+    $('expNVal').textContent=n;
+    const prev=n>0?y[n-1]:0,old=(1-a)*prev,now=a*x[n];
+    $('expCalc').textContent=`y[${n}] = ${fmt(1-a)} × ${fmt(prev)} + ${fmt(a)} × ${fmt(x[n])} = ${fmt(y[n])}`;
+    const samples90=Math.ceil(Math.log(.1)/Math.log(1-a));
+    $('expNote').textContent=`지난 출력의 기여 ${fmt(old)} + 현재 입력의 기여 ${fmt(now)} · 단위 계단에 대해 약 ${samples90}개 샘플이면 최종값의 90%에 도달`;
+    plot('expChart',[{points:x.map((v,n)=>({x:n,y:v})),color:'#92a2b9',width:1.5,opacity:.82},{points:y.map((v,n)=>({x:n,y:v})),color:'accent',width:2.8}],{selected:n});
+  }
+  function render(){const x=inputData();updateMA(x);updateEXP(x);}
+  function listenRange(id,key){$(id).addEventListener('input',e=>{state[key]=Number(e.target.value);render();});}
+  listenRange('maN','maN');listenRange('expN','expN');listenRange('alpha','alpha');
+  document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{
+    state.mode=b.dataset.mode;
+    document.querySelectorAll('[data-mode]').forEach(other=>{
+      const selected=other===b;
+      other.classList.toggle('active',selected);
+      other.setAttribute('aria-pressed',String(selected));
+    });
+    render();
+  }));
+  [['maChart','maN'],['expChart','expN']].forEach(([id,inputId])=>{
+    $(id).addEventListener('click',ev=>{
+      const info=charts[id];if(!info)return;
+      const box=$(id).getBoundingClientRect(),x=ev.clientX-box.left;
+      const sample=Math.round(info.xmin+(x-info.pad.l)/(info.W-info.pad.l-info.pad.r)*(info.xmax-info.xmin));
+      const slider=$(inputId);
+      const n=Math.max(Number(slider.min),Math.min(Number(slider.max),sample));
+      slider.value=n;slider.dispatchEvent(new Event('input',{bubbles:true}));
+    });
+  });
+  $('themeBtn').addEventListener('click',()=>{
+    const dark=document.documentElement.dataset.theme==='dark';
+    document.documentElement.dataset.theme=dark?'light':'dark';
+    $('themeBtn').textContent=dark?'☾ 다크 모드':'☼ 라이트 모드';
+    render();
+  });
+  let resizeRaf=0;
+  window.addEventListener('resize',()=>{
+    cancelAnimationFrame(resizeRaf);
+    resizeRaf=requestAnimationFrame(render);
+  },{passive:true});
+  render();
+})();
+</script>
+</body>
+</html>
